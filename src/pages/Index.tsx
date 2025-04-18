@@ -1,6 +1,6 @@
 
 import Layout from '@/components/Layout';
-import { Code, Heart, Briefcase, ArrowRight } from 'lucide-react';
+import { Code, Heart, Briefcase, ArrowRight, Mail, Github, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
@@ -12,19 +12,34 @@ const Index = () => {
             <div className="text-primary mb-4">~/SOFTWARE-ENGINEER</div>
             <h1 className="text-4xl font-bold mb-6">Yassine Jdair</h1>
             
-            <div className="bg-card/50 border border-border/50 rounded-lg p-6 mb-12 text-left">
+            <div className="flex justify-center gap-6 mb-8 text-muted-foreground">
+              <a href="mailto:yassinejdair@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <Mail className="h-4 w-4" />
+                yassinejdair@gmail.com
+              </a>
+              <a href="tel:+353851244472" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <Phone className="h-4 w-4" />
+                +353 85 124 4472
+              </a>
+              <a href="https://github.com/YassineJdair" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <Github className="h-4 w-4" />
+                GitHub
+              </a>
+            </div>
+            
+            <div className="bg-card/50 border border-border/50 rounded-lg p-6 mb-12 text-left font-mono">
               <code className="block mb-2 text-sm text-muted-foreground">const engineer = {'{'}</code>
               <code className="block pl-4 text-sm">
-                <span className="text-muted-foreground">name:</span> <span className="text-blue-400">"Yassine Jdair"</span>,
+                <span className="text-muted-foreground">name:</span> <span className="text-primary">"Yassine Jdair"</span>,
               </code>
               <code className="block pl-4 text-sm">
-                <span className="text-muted-foreground">role:</span> <span className="text-blue-400">"Software Engineer"</span>,
+                <span className="text-muted-foreground">role:</span> <span className="text-primary">"Software Engineer"</span>,
               </code>
               <code className="block pl-4 text-sm">
                 <span className="text-muted-foreground">passions:</span> [
-                <span className="text-blue-400">"Web Development"</span>, 
-                <span className="text-blue-400">"System Design"</span>, 
-                <span className="text-blue-400">"UI/UX Design"</span>]
+                <span className="text-primary">"Web Development"</span>, 
+                <span className="text-primary">"System Design"</span>, 
+                <span className="text-primary">"UI/UX Design"</span>]
               </code>
               <code className="block text-sm text-muted-foreground">{'}'};</code>
             </div>
@@ -34,7 +49,7 @@ const Index = () => {
                 <Code className="h-5 w-5 text-primary" /> Technical Expertise
               </h2>
               <div className="flex flex-wrap justify-center gap-3">
-                {['React', 'TypeScript', 'Node.js', 'Python', 'Tailwind'].map((tech) => (
+                {['Java', 'Spring Boot', 'JavaScript', 'Node.js', 'TypeScript', 'HTML', 'MySQL', 'Git'].map((tech) => (
                   <span 
                     key={tech} 
                     className="bg-accent/50 text-accent-foreground px-3 py-1 rounded-full text-sm"
@@ -47,33 +62,18 @@ const Index = () => {
             
             <div className="mb-12">
               <h2 className="flex items-center justify-center gap-2 text-xl font-semibold mb-6">
-                <Briefcase className="h-5 w-5 text-primary" /> Experience
+                <Heart className="h-5 w-5 text-primary" /> Interests
               </h2>
-              <div className="text-left space-y-6">
-                <div className="border-b border-border/40 pb-4">
-                  <div className="flex justify-between">
-                    <h3 className="font-medium">Tech Solutions Inc</h3>
-                    <span className="text-sm text-muted-foreground">2021 - Present</span>
-                  </div>
-                  <div className="text-primary text-sm">Software Engineer</div>
-                </div>
-                <div className="border-b border-border/40 pb-4">
-                  <div className="flex justify-between">
-                    <h3 className="font-medium">Digital Innovations Ltd</h3>
-                    <span className="text-sm text-muted-foreground">2019 - 2021</span>
-                  </div>
-                  <div className="text-primary text-sm">Junior Developer</div>
-                </div>
+              <div className="flex flex-wrap justify-center gap-3">
+                {['Software UI/UX', 'Blockchain', 'Networking', 'Electronics', 'Cars', 'Content Creation'].map((interest) => (
+                  <span 
+                    key={interest} 
+                    className="bg-accent/50 text-accent-foreground px-3 py-1 rounded-full text-sm"
+                  >
+                    {interest}
+                  </span>
+                ))}
               </div>
-            </div>
-            
-            <div className="mb-12">
-              <h2 className="flex items-center justify-center gap-2 text-xl font-semibold mb-6">
-                Current Focus
-              </h2>
-              <p className="text-muted-foreground">
-                Exploring modern web frameworks and building interactive applications
-              </p>
             </div>
             
             <Link 
