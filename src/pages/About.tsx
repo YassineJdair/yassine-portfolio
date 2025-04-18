@@ -16,16 +16,15 @@ const About = () => {
           
           <div className="bg-card/50 border border-border/50 rounded-lg p-6 mb-12">
             <p className="text-muted-foreground leading-relaxed mb-6">
-              I'm a passionate software engineer who loves building things. With a focus on web development,
-              I enjoy creating intuitive and responsive user interfaces that solve real problems.
-              When I'm not coding, you can find me exploring new technologies, reading tech blogs,
-              or contributing to open-source projects.
+            I’m a creative-minded software implementation engineer who loves building systems that make life easier — whether that’s through no-code platforms like Blocworx or hands-on technical projects.
+
+I enjoy working at the intersection of technology, design, and business, turning ideas into real-world solutions. From developing digital workflows to co-founding startups in automotive customization and fragrance branding, I’m always looking for ways to blend function with creativity.
+
+I’m especially passionate about user experience, automation, and exploring emerging tools — whether it’s through API scripting, UI/UX design, or discovering new tech. Outside of work, you’ll probably find me experimenting with something new, crafting a brand from scratch, or helping others bring their ideas to life.
             </p>
             
             <p className="text-muted-foreground leading-relaxed">
-              My goal is to continuously improve my skills and stay updated with the latest
-              industry trends. I believe in writing clean, maintainable code and following best practices
-              to deliver high-quality software solutions.
+            My goal is to continuously grow as a problem solver by learning new tools, technologies, and approaches to building smarter solutions. I value clean, maintainable work—whether it's in code, no-code configurations, or user experiences—and I strive to follow best practices that deliver real, lasting impact.
             </p>
           </div>
           
