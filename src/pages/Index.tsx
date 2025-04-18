@@ -1,6 +1,6 @@
 
 import Layout from '@/components/Layout';
-import { Code, Heart, Briefcase } from 'lucide-react';
+import { Code, Heart, Briefcase, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
