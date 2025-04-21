@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,6 +15,7 @@ import ExpenseTracker from "./pages/ExpenseTracker";
 import TemperatureConverter from "./pages/TemperatureConverter";
 import PomodoroTimer from "./pages/PomodoroTimer";
 import TaskTracker from "./pages/TaskTracker";
+import CrossyRoad from "./components/CrossyRoad";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +32,14 @@ const App = () => (
             <Route path="/experience" element={<Experience />} />
             <Route path="/about" element={<About />} />
             <Route path="/calculator" element={<Calculator />} />
-            <Route path="/temperature-converter" element={<TemperatureConverter />} />
+            <Route
+              path="/temperature-converter"
+              element={<TemperatureConverter />}
+            />
             <Route path="/pomodoro-timer" element={<PomodoroTimer />} />
             <Route path="/task-tracker" element={<TaskTracker />} />
             <Route path="/expense-tracker" element={<ExpenseTracker />} />
+            <Route path="/crossyroad" element={<CrossyRoad />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

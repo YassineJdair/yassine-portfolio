@@ -1,6 +1,5 @@
-
-import { Link } from 'react-router-dom';
-import { ThemeToggle } from '@/providers/ThemeProvider';
+import { Link } from "react-router-dom";
+import { ThemeToggle } from "@/providers/ThemeProvider";
 
 const Navbar = () => {
   return (
@@ -13,16 +12,28 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center space-x-8">
-            <Link to="/projects" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/projects"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Projects
             </Link>
-            <Link to="/experience" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/experience"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Experience
             </Link>
-            <Link to="/pomodoro-timer" className="text-foreground hover:text-primary transition-colors">
-              Pomodoro
+            <Link
+              to="/CrossyRoad"
+              className="text-foreground hover:text-primary transition-colors"
+            >
+              Crossy
             </Link>
-            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/about"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               About Me
             </Link>
             <ThemeToggle />
