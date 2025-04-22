@@ -3,15 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
-  "dev": "vite",
-  "build": "remix vite:build",
-  "build:dev": "vite build --mode development",
-  "lint": "eslint .",
-  "preview": "vite preview",
-  "remix:build": "remix vite:build"
-},
-
+  "scripts": {
+    "dev": "vite",
+    "build": "remix vite:build",
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "remix:build": "remix vite:build"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
@@ -60,6 +59,7 @@
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "tslib": "^2.8.1",
     "vaul": "^0.9.3",
     "zod": "^3.23.8"
   },
