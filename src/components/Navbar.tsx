@@ -25,10 +25,10 @@ const Navbar = () => {
               Experience
             </Link>
             <Link
-              to="/CrossyRoad"
+              to="/games"
               className="text-foreground hover:text-primary transition-colors"
             >
-              Crossy
+              Games
             </Link>
             <Link
               to="/about"
