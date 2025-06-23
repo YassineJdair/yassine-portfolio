@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "remix vite:build",
+    "build": "remix build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "remix:build": "remix vite:build"
+    "remix:build": "remix build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
