@@ -6,7 +6,7 @@ Welcome to my personal developer portfolio! This site serves as a digital snapsh
 
 ## 🖥️ Live Preview
 
-## **URL**:
+## **https://yassine-mac.netlify.app/**:
 
 ## ✏️ How can I edit this code?
 
