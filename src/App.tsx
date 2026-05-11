@@ -15,43 +15,70 @@ import ExpenseTracker from "./pages/ExpenseTracker";
 import TemperatureConverter from "./pages/TemperatureConverter";
 import PomodoroTimer from "./pages/PomodoroTimer";
 import TaskTracker from "./pages/TaskTracker";
+import GamesMenu from "./pages/Games";
+
+// Games (components)
 import CrossyRoad from "./components/CrossyRoad";
 import PacmanGame from "./components/PacmanGame";
 import CarGame from "./components/CarRoadGame";
-import GamesMenu from "./pages/games";
+import SnakeGame from "./components/SnakeGame";
+
+// Tools
+import PasswordGenerator from "./pages/PasswordGenerator";
+import JsonFormatter from "./pages/JsonFormatter";
+import SalaryCalculator from "./pages/SalaryCalculator";
+import HabitTracker from "./pages/HabitTracker";
+import CarCalculator from "./pages/CarCalculator";
+import ReadmeGenerator from "./pages/ReadmeGenerator";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/calculator" element={<Calculator />} />
-            <Route path="/games" element={<GamesMenu />} />
-            <Route
-              path="/temperature-converter"
-              element={<TemperatureConverter />}
-            />
-            <Route path="/pomodoro-timer" element={<PomodoroTimer />} />
-            <Route path="/task-tracker" element={<TaskTracker />} />
-            <Route path="/expense-tracker" element={<ExpenseTracker />} />
-            <Route path="/crossyroad" element={<CrossyRoad />} />
-            <Route path= "/pacmangame" element={<PacmanGame />}/>
-            <Route path= "/carroadgame" element={<CarGame />}/>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+            <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                    <Routes>
+                        {/* Main */}
+                        <Route path="/" element={<Index />} />
+                        <Route path="/projects" element={<Projects />} />
+                        <Route path="/experience" element={<Experience />} />
+                        <Route path="/about" element={<About />} />
+
+                        {/* Games */}
+                        <Route path="/games" element={<GamesMenu />} />
+                        <Route path="/crossyroad" element={<CrossyRoad />} />
+                        <Route path="/pacmangame" element={<PacmanGame />} />
+                        <Route path="/carroadgame" element={<CarGame />} />
+                        <Route path="/snake" element={<SnakeGame />} />
+
+                        {/* Original tools */}
+                        <Route path="/calculator" element={<Calculator />} />
+                        <Route path="/temperature-converter" element={<TemperatureConverter />} />
+                        <Route path="/pomodoro-timer" element={<PomodoroTimer />} />
+                        <Route path="/task-tracker" element={<TaskTracker />} />
+                        <Route path="/expense-tracker" element={<ExpenseTracker />} />
+
+                        {/* Dev tools */}
+                        <Route path="/password-generator" element={<PasswordGenerator />} />
+                        <Route path="/json-formatter" element={<JsonFormatter />} />
+                        <Route path="/readme-generator" element={<ReadmeGenerator />} />
+
+                        {/* Finance & Life */}
+                        <Route path="/salary-calculator" element={<SalaryCalculator />} />
+                        <Route path="/car-calculator" element={<CarCalculator />} />
+
+                        {/* Productivity */}
+                        <Route path="/habit-tracker" element={<HabitTracker />} />
+
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </BrowserRouter>
+            </TooltipProvider>
+        </ThemeProvider>
+    </QueryClientProvider>
 );
 
 export default App;
