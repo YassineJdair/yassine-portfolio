@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/Navbar";
+import { useCanvasScale } from "@/hooks/useCanvasScale";
 
 const T = 28;
 const COLS = 19;
@@ -46,7 +47,7 @@ type Dir = { x: number; y: number };
 const DIRS: Dir[] = [{ x:1,y:0 },{ x:-1,y:0 },{ x:0,y:1 },{ x:0,y:-1 }];
 const GHOST_COLORS = ["#ef4444","#ec4899","#06b6d4","#f97316"];
 
-interface Ghost { x: number; y: number; dir: Dir; frightened: number; eaten: boolean; }
+interface Ghost { x: number; y: number; vx: number; vy: number; dir: Dir; frightened: number; eaten: boolean; }
 
 const freshMaze = () => MAZE_TEMPLATE.map(r => [...r]);
 const countDots = (m: number[][]) => m.flat().filter(v => v === PELLET || v === POWER).length;
@@ -88,11 +89,12 @@ export default function PacmanGame() {
     const s = useRef({
         maze: freshMaze(),
         px: PLAYER_START.x, py: PLAYER_START.y,
+        vx: PLAYER_START.x, vy: PLAYER_START.y,  // visual (sub-tile) position
         dir: { x: 0, y: 0 } as Dir,
         nextDir: { x: 0, y: 0 } as Dir,
-        hasInput: false, // player doesn't move until first keypress
+        hasInput: false,
         mouth: 0,
-        ghosts: GHOST_STARTS.map(p => ({ ...p, dir: DIRS[0], frightened: 0, eaten: false })) as Ghost[],
+        ghosts: GHOST_STARTS.map(p => ({ ...p, vx: p.x, vy: p.y, dir: DIRS[0], frightened: 0, eaten: false })) as Ghost[],
         score: 0, lives: 3, level: 1,
         dots: countDots(MAZE_TEMPLATE),
         phase: "start" as "start"|"playing"|"dead"|"win"|"gameover",
@@ -110,9 +112,10 @@ export default function PacmanGame() {
         g.maze = freshMaze();
         g.dots = countDots(MAZE_TEMPLATE);
         g.px = PLAYER_START.x; g.py = PLAYER_START.y;
+        g.vx = PLAYER_START.x; g.vy = PLAYER_START.y;  // snap visual on reset
         g.dir = { x: 0, y: 0 }; g.nextDir = { x: 0, y: 0 }; g.hasInput = false;
         g.mouth = 0; g.frame = 0; g.deadTimer = 0; g.phase = "playing";
-        g.ghosts = GHOST_STARTS.map((p, i) => ({ ...p, dir: DIRS[i % 4], frightened: 0, eaten: false }));
+        g.ghosts = GHOST_STARTS.map((p, i) => ({ ...p, vx: p.x, vy: p.y, dir: DIRS[i % 4], frightened: 0, eaten: false }));
         tick(n => n + 1);
     }, []);
 
@@ -177,6 +180,25 @@ export default function PacmanGame() {
             raf.current = requestAnimationFrame(loop);
             const g = s.current;
 
+            // ── Smooth movement: interpolate visual positions ──
+            const PLAYER_SPD = 1 / 10;
+            const vizSpeedMult = Math.max(0.5, 1 - (g.level - 1) * 0.1);
+            const GHOST_SPDS = [36, 42, 48, 54].map(n => 1 / Math.round(n * vizSpeedMult));
+
+            const lerpAxis = (v: number, target: number, spd: number, wrap: number) => {
+                let d = target - v;
+                if (Math.abs(d) > wrap / 2) d = d > 0 ? d - wrap : d + wrap; // handle tunnel wrap
+                if (Math.abs(d) <= spd) return target;
+                return ((v + Math.sign(d) * spd) + wrap) % wrap;
+            };
+            g.vx = lerpAxis(g.vx, g.px, PLAYER_SPD, COLS);
+            g.vy = lerpAxis(g.vy, g.py, PLAYER_SPD, ROWS);
+            g.ghosts.forEach((gh, i) => {
+                const spd = GHOST_SPDS[i] ?? GHOST_SPDS[0];
+                gh.vx = lerpAxis(gh.vx, gh.x, spd, COLS);
+                gh.vy = lerpAxis(gh.vy, gh.y, spd, ROWS);
+            });
+
             // ── Draw maze ──
             ctx.fillStyle = "#000";
             ctx.fillRect(0, 0, W, H);
@@ -233,15 +255,15 @@ export default function PacmanGame() {
                 // Still draw entities in non-playing phases
                 if (g.phase !== "start") {
                     g.ghosts.forEach((gh, i) => {
-                        if (!gh.eaten) drawGhost(gh.x, gh.y, GHOST_COLORS[i], gh.frightened > 0, gh.frightened < 60 && Math.floor(g.frame/8)%2===0);
+                        if (!gh.eaten) drawGhost(gh.vx, gh.vy, GHOST_COLORS[i], gh.frightened > 0, gh.frightened < 60 && Math.floor(g.frame/8)%2===0);
                     });
                     // Pacman
                     const mA = (Math.sin(g.frame * 0.3) + 1) * 0.2;
                     const angle = Math.atan2(g.dir.y, g.dir.x);
                     ctx.fillStyle = "#facc15";
                     ctx.beginPath();
-                    ctx.moveTo(g.px*T+T/2, g.py*T+T/2);
-                    ctx.arc(g.px*T+T/2, g.py*T+T/2, T/2-2, angle+mA, angle+Math.PI*2-mA);
+                    ctx.moveTo(g.vx*T+T/2, g.vy*T+T/2);
+                    ctx.arc(g.vx*T+T/2, g.vy*T+T/2, T/2-2, angle+mA, angle+Math.PI*2-mA);
                     ctx.closePath(); ctx.fill();
                 }
                 return;
@@ -252,14 +274,14 @@ export default function PacmanGame() {
                 if (gh.eaten) {
                     // just eyes drifting home
                     ctx.fillStyle = "#fff";
-                    ctx.beginPath(); ctx.arc(gh.x*T+T/2-4, gh.y*T+T/2, 3, 0, Math.PI*2); ctx.fill();
-                    ctx.beginPath(); ctx.arc(gh.x*T+T/2+4, gh.y*T+T/2, 3, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(gh.vx*T+T/2-4, gh.vy*T+T/2, 3, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(gh.vx*T+T/2+4, gh.vy*T+T/2, 3, 0, Math.PI*2); ctx.fill();
                     ctx.fillStyle = "#1e40af";
-                    ctx.beginPath(); ctx.arc(gh.x*T+T/2-3, gh.y*T+T/2, 1.5, 0, Math.PI*2); ctx.fill();
-                    ctx.beginPath(); ctx.arc(gh.x*T+T/2+5, gh.y*T+T/2, 1.5, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(gh.vx*T+T/2-3, gh.vy*T+T/2, 1.5, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(gh.vx*T+T/2+5, gh.vy*T+T/2, 1.5, 0, Math.PI*2); ctx.fill();
                 } else {
                     const flash = gh.frightened > 0 && gh.frightened < 60 && Math.floor(g.frame/8)%2===0;
-                    drawGhost(gh.x, gh.y, GHOST_COLORS[i], gh.frightened > 0, flash);
+                    drawGhost(gh.vx, gh.vy, GHOST_COLORS[i], gh.frightened > 0, flash);
                 }
             });
 
@@ -269,8 +291,8 @@ export default function PacmanGame() {
             ctx.fillStyle = "#facc15";
             ctx.shadowBlur = 6; ctx.shadowColor = "#facc15";
             ctx.beginPath();
-            ctx.moveTo(g.px*T+T/2, g.py*T+T/2);
-            ctx.arc(g.px*T+T/2, g.py*T+T/2, T/2-2, angle+mA, angle+Math.PI*2-mA);
+            ctx.moveTo(g.vx*T+T/2, g.vy*T+T/2);
+            ctx.arc(g.vx*T+T/2, g.vy*T+T/2, T/2-2, angle+mA, angle+Math.PI*2-mA);
             ctx.closePath(); ctx.fill();
             ctx.shadowBlur = 0;
 
@@ -278,8 +300,8 @@ export default function PacmanGame() {
             g.frame++;
             g.ghosts.forEach(gh => { if (gh.frightened > 0) gh.frightened--; });
 
-            // Player only moves after first keypress, every 14 frames
-            if (g.hasInput && g.frame % 14 === 0) {
+            // Player only moves after first keypress, every 10 frames
+            if (g.hasInput && g.frame % 10 === 0) {
                 // Try queued direction first
                 const nd = g.nextDir;
                 if (canMove(g.maze, g.px + nd.x, g.py + nd.y)) g.dir = nd;
@@ -303,9 +325,9 @@ export default function PacmanGame() {
                 }
             }
 
-            // Ghosts don't move until player has made their first move
-            // Very slow intervals: Blinky:40, Pinky:46, Inky:52, Clyde:58
-            const GHOST_INTERVALS = [40, 46, 52, 58];
+            // Ghost speed scales with level — each level reduces interval by 10%, min 50%
+            const speedMult = Math.max(0.5, 1 - (g.level - 1) * 0.1);
+            const GHOST_INTERVALS = [36, 42, 48, 54].map(n => Math.round(n * speedMult));
             if (!g.hasInput) return; // ghosts frozen until player moves
             g.ghosts.forEach((gh, idx) => {
                 if (g.frame % GHOST_INTERVALS[idx] !== 0) return;
@@ -420,31 +442,36 @@ export default function PacmanGame() {
         if (g.phase === "dead" && g.deadTimer <= 0 && g.lives > 0) { reset(false); }
     };
 
+    const { wrapRef, scale } = useCanvasScale(W, H);
+
     return (
-        <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+        <div className="bg-[#1a1a1a] text-white flex flex-col" style={{ height: "100dvh", overflow: "hidden" }}>
             <Navbar />
-            <div className="flex flex-col items-center justify-center flex-1 py-8 px-4">
+            <div className="flex flex-col items-center flex-1 min-h-0 py-2 px-3" style={{ gap: 6 }}>
                 {/* HUD */}
-                <div className="flex gap-8 mb-3 font-mono">
+                <div className="flex gap-6 font-mono flex-shrink-0">
                     <div className="text-center"><div className="text-gray-500 text-xs">SCORE</div><div className="text-yellow-400 text-xl font-bold">{ui.score}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">LIVES</div><div className="text-xl">{Array.from({length:ui.lives},(_,i)=><span key={i}>🟡</span>)}{Array.from({length:Math.max(0,3-ui.lives)},(_,i)=><span key={i} className="opacity-20">🟡</span>)}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">LEVEL</div><div className="text-blue-400 text-xl font-bold">{ui.level}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">BEST</div><div className="text-green-400 text-xl font-bold">{ui.best}</div></div>
                 </div>
 
-                <canvas ref={canvasRef} width={W} height={H} onClick={handleClick}
-                        style={{ borderRadius: 12, boxShadow: "0 8px 40px rgba(0,0,0,0.8)", cursor: "pointer", display: "block" }} />
+                {/* Canvas — fills remaining space, constrained on both axes */}
+                <div ref={wrapRef} className="flex-1 min-h-0 w-full flex items-center justify-center">
+                    <canvas ref={canvasRef} width={W} height={H} onClick={handleClick}
+                            style={{ width: W * scale, height: H * scale, display: "block", borderRadius: 10, boxShadow: "0 6px 24px rgba(0,0,0,0.8)", cursor: "pointer" }} />
+                </div>
 
                 {/* D-pad */}
-                <div className="mt-5 grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 flex-shrink-0" style={{ gap: 6 }}>
                     <div />
-                    <button onClick={() => { s.current.nextDir={x:0,y:-1}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▲</button>
+                    <button onClick={() => { s.current.nextDir={x:0,y:-1}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▲</button>
                     <div />
-                    <button onClick={() => { s.current.nextDir={x:-1,y:0}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">◀</button>
-                    <button onClick={() => { s.current.nextDir={x:0,y:1}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▼</button>
-                    <button onClick={() => { s.current.nextDir={x:1,y:0}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▶</button>
+                    <button onClick={() => { s.current.nextDir={x:-1,y:0}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">◀</button>
+                    <button onClick={() => { s.current.nextDir={x:0,y:1}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▼</button>
+                    <button onClick={() => { s.current.nextDir={x:1,y:0}; s.current.hasInput=true; }} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▶</button>
                 </div>
-                <p className="mt-3 text-xs text-gray-600 font-mono">WASD / ARROWS · CLICK TO START</p>
+                <p className="text-xs text-gray-600 font-mono flex-shrink-0">WASD / ARROWS · SWIPE · TAP TO START</p>
             </div>
         </div>
     );

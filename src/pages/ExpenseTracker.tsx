@@ -183,7 +183,7 @@ export default function ExpenseTracker() {
             <Navbar />
             <div className="flex flex-col items-center px-4 py-12">
                 {/* Header */}
-                <div className="bg-[#2a2a2a] border-b border-[#3a3a3a] px-4 py-6">
+                <div className="bg-[#2a2a2a] border-b border-[#3a3a3a] px-4 py-6 w-full">
                     <div className="max-w-5xl mx-auto">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
@@ -191,7 +191,7 @@ export default function ExpenseTracker() {
                                 <p className="text-gray-400 text-sm">Budget · Expenses · Insights</p>
                             </div>
                             {/* Month navigator */}
-                            <div className="flex items-center gap-3 bg-[#1a1a1a] rounded-2xl px-4 py-2">
+                            <div className="flex items-center gap-3 bg-[#1a1a1a] rounded-2xl px-4 py-2 self-start sm:self-auto">
                                 <button onClick={prevMonth} className="text-gray-400 hover:text-white transition px-1">‹</button>
                                 <span className="font-semibold min-w-[120px] text-center">{MONTHS[viewMonth]} {viewYear}</span>
                                 <button onClick={nextMonth} disabled={isCurrentMonth} className="text-gray-400 hover:text-white disabled:opacity-30 transition px-1">›</button>
@@ -215,13 +215,13 @@ export default function ExpenseTracker() {
                     </div>
                 </div>
 
-                <div className="max-w-5xl mx-auto px-4 mt-6 space-y-6">
-                    {/* Tabs */}
-                    <div className="flex gap-1 bg-[#2a2a2a] p-1.5 rounded-2xl">
+                <div className="w-full max-w-5xl px-0 mt-6 space-y-6">
+                    {/* Tabs — scrollable on very small screens */}
+                    <div className="flex gap-1 bg-[#2a2a2a] p-1.5 rounded-2xl overflow-x-auto">
                         {tabs.map(t => (
                             <button key={t} onClick={() => setActiveTab(t)}
-                                    className={`flex-1 py-2 rounded-xl capitalize text-sm font-medium transition ${activeTab === t ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
-                                {t === "overview" ? "📊 Overview" : t === "transactions" ? "💳 Transactions" : t === "budgets" ? "🎯 Budgets" : "💡 Insights"}
+                                    className={`flex-1 min-w-[72px] py-2 rounded-xl text-xs sm:text-sm font-medium transition whitespace-nowrap ${activeTab === t ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
+                                {t === "overview" ? "📊 Overview" : t === "transactions" ? "💳 Txns" : t === "budgets" ? "🎯 Budgets" : "💡 Insights"}
                             </button>
                         ))}
                     </div>

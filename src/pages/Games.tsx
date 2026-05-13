@@ -4,6 +4,30 @@ import Layout from "@/components/Layout";
 
 const games = [
     {
+        to: "/patches",
+        label: "◼ Daily Patches",
+        bg: "bg-gray-700 hover:bg-gray-600",
+        text: "text-white",
+        desc: "Nonogram puzzle · Fill the grid from number clues",
+        badge: "NEW",
+    },
+    {
+        to: "/zip",
+        label: "🔵 Daily Zip",
+        bg: "bg-blue-600 hover:bg-blue-500",
+        text: "text-white",
+        desc: "Trail-blazing puzzle · Connect 1→N · Fill every cell",
+        badge: "NEW",
+    },
+    {
+        to: "/dailyword",
+        label: "🟩 Daily Word",
+        bg: "bg-emerald-600 hover:bg-emerald-500",
+        text: "text-white",
+        desc: "Wordle-style · New word every day · Same for everyone",
+        badge: "NEW",
+    },
+    {
         to: "/crossyroad",
         label: "🐥 Play Crossy Road",
         bg: "bg-yellow-500 hover:bg-yellow-400",
@@ -49,8 +73,13 @@ const GamesMenu = () => {
                         <Link
                             key={game.to}
                             to={game.to}
-                            className={`${game.bg} ${game.text} px-8 py-5 rounded-2xl shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 flex flex-col gap-1`}
+                            className={`${game.bg} ${game.text} px-8 py-5 rounded-2xl shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 flex flex-col gap-1 relative`}
                         >
+                            {(game as any).badge && (
+                                <span className="absolute top-3 right-3 bg-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide">
+                                    {(game as any).badge}
+                                </span>
+                            )}
                             <span className="text-xl font-bold">{game.label}</span>
                             <span className="text-sm opacity-75">{game.desc}</span>
                         </Link>

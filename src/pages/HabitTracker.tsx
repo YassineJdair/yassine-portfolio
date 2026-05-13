@@ -101,16 +101,16 @@ export default function HabitTracker() {
                 <div className="w-full max-w-2xl space-y-3">
                     {/* Day headers */}
                     {habits.length > 0 && (
-                        <div className="flex items-center gap-2 px-4">
-                            <div className="flex-1" />
-                            <div className="flex gap-1.5">
+                        <div className="flex items-center gap-2 px-4 overflow-x-auto">
+                            <div className="flex-1 min-w-[80px]" />
+                            <div className="flex gap-1">
                                 {last7.map(d => (
-                                    <div key={d} className={`w-8 text-center text-xs font-medium ${d === todayStr ? "text-yellow-500" : "text-gray-500"}`}>
+                                    <div key={d} className={`w-7 sm:w-8 text-center text-xs font-medium flex-shrink-0 ${d === todayStr ? "text-yellow-500" : "text-gray-500"}`}>
                                         {DAY_LABELS[new Date(d + "T12:00:00").getDay()]}
                                     </div>
                                 ))}
                             </div>
-                            <div className="w-16 text-center text-xs text-gray-500">Streak</div>
+                            <div className="w-12 sm:w-16 text-center text-xs text-gray-500 flex-shrink-0">Streak</div>
                         </div>
                     )}
 
@@ -118,31 +118,31 @@ export default function HabitTracker() {
                     {habits.map(habit => {
                         const streak = getStreak(habit.completions);
                         return (
-                            <div key={habit.id} className="bg-[#2a2a2a] rounded-2xl px-4 py-3 flex items-center gap-3 group">
-                                <span className="text-xl w-8 text-center">{habit.emoji}</span>
+                            <div key={habit.id} className="bg-[#2a2a2a] rounded-2xl px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-3 group">
+                                <span className="text-xl w-7 sm:w-8 text-center flex-shrink-0">{habit.emoji}</span>
                                 <div className="flex-1 min-w-0">
-                                    <p className="font-medium truncate">{habit.name}</p>
+                                    <p className="font-medium truncate text-sm sm:text-base">{habit.name}</p>
                                 </div>
-                                <div className="flex gap-1.5 items-center">
+                                <div className="flex gap-1 items-center">
                                     {last7.map(d => {
                                         const done = habit.completions.includes(d);
                                         const isToday = d === todayStr;
                                         return (
                                             <button key={d} onClick={() => toggle(habit.id, d)}
-                                                    className={`w-8 h-8 rounded-lg transition-all ${done ? "scale-95" : "hover:scale-105"}`}
+                                                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg transition-all flex-shrink-0 flex items-center justify-center ${done ? "scale-95" : "hover:scale-105"}`}
                                                     style={{ background: done ? habit.color : "#1a1a1a", border: `2px solid ${isToday ? habit.color : "#3a3a3a"}` }}>
                                                 {done && <span className="text-black text-xs font-bold">✓</span>}
                                             </button>
                                         );
                                     })}
                                 </div>
-                                <div className="w-16 text-center">
-                <span className="text-sm font-bold" style={{ color: streak > 0 ? habit.color : "#6b7280" }}>
+                                <div className="w-12 sm:w-16 text-center flex-shrink-0">
+                <span className="text-xs sm:text-sm font-bold" style={{ color: streak > 0 ? habit.color : "#6b7280" }}>
                   {streak > 0 ? `🔥 ${streak}` : "—"}
                 </span>
                                 </div>
                                 <button onClick={() => remove(habit.id)}
-                                        className="opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-400 transition text-lg leading-none">×</button>
+                                        className="opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-400 transition text-lg leading-none flex-shrink-0">×</button>
                             </div>
                         );
                     })}

@@ -1,5 +1,6 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import Navbar from "@/components/Navbar";
+import { useCanvasScale } from "@/hooks/useCanvasScale";
 
 const COLS = 24;
 const ROWS = 18;
@@ -366,13 +367,48 @@ export default function SnakeGame() {
         }
     };
 
+    // Touch swipe on canvas
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        let start: { x: number; y: number } | null = null;
+
+        const onTouchStart = (e: TouchEvent) => {
+            e.preventDefault();
+            start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        };
+        const onTouchEnd = (e: TouchEvent) => {
+            if (!start) return;
+            e.preventDefault();
+            const dx = e.changedTouches[0].clientX - start.x;
+            const dy = e.changedTouches[0].clientY - start.y;
+            start = null;
+            if (Math.abs(dx) < 20 && Math.abs(dy) < 20) {
+                const state = g.current;
+                if (state.phase === "start" || state.phase === "over") reset();
+                return;
+            }
+            if (Math.abs(dx) > Math.abs(dy)) moveDir(dx > 0 ? 1 : -1, 0);
+            else moveDir(0, dy > 0 ? 1 : -1);
+        };
+
+        canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+        canvas.addEventListener("touchend", onTouchEnd, { passive: false });
+        return () => {
+            canvas.removeEventListener("touchstart", onTouchStart);
+            canvas.removeEventListener("touchend", onTouchEnd);
+        };
+    }, [reset]);
+
+    const { wrapRef, scale } = useCanvasScale(W, H);
+
     return (
-        <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+        <div className="bg-[#1a1a1a] text-white flex flex-col" style={{ height: "100dvh", overflow: "hidden" }}>
             <Navbar />
-            <div className="flex flex-col items-center justify-center flex-1 py-8 px-4">
+            <div className="flex flex-col items-center flex-1 min-h-0 py-2 px-3" style={{ gap: 6 }}>
 
                 {/* HUD */}
-                <div className="flex gap-8 mb-3 font-mono">
+                <div className="flex gap-8 font-mono flex-shrink-0">
                     {[
                         { label: "LVL",   value: 0, getValue: () => g.current.level },
                         { label: "SCORE", value: 0, getValue: () => g.current.score },
@@ -384,44 +420,49 @@ export default function SnakeGame() {
                     ))}
                 </div>
 
-                <canvas ref={canvasRef} width={W} height={H}
-                        style={{
-                            border: `4px solid ${C.dark}`,
-                            borderRadius: 3,
-                            boxShadow: `inset 3px 3px 0 ${C.light}, inset -3px -3px 0 ${C.mid}, 0 12px 40px rgba(0,0,0,0.7)`,
-                            display: "block",
-                        }} />
+                {/* Canvas — scales to fill remaining space on both axes */}
+                <div ref={wrapRef} className="flex-1 min-h-0 w-full flex items-center justify-center">
+                    <canvas ref={canvasRef} width={W} height={H}
+                            style={{
+                                width: W * scale,
+                                height: H * scale,
+                                display: "block",
+                                border: `4px solid ${C.dark}`,
+                                borderRadius: 3,
+                                boxShadow: `inset 3px 3px 0 ${C.light}, inset -3px -3px 0 ${C.mid}, 0 8px 24px rgba(0,0,0,0.7)`,
+                            }} />
+                </div>
 
                 {/* Enemy count */}
-                <div className="mt-2 font-mono text-xs" style={{ color: "#555" }}>
+                <div className="font-mono text-xs flex-shrink-0" style={{ color: "#555" }}>
                     ENEMIES: <span style={{ color: "#ef4444" }}>
             {"✕ ".repeat(Math.min(g.current.enemies.length, 6))}
           </span>
                 </div>
 
                 {/* D-pad */}
-                <div className="mt-4 grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-3 flex-shrink-0" style={{ gap: 6 }}>
                     <div />
                     <button onClick={() => moveDir(0,-1)}
-                            className="p-3.5 font-bold text-base transition active:scale-95"
+                            className="p-4 sm:p-3.5 font-bold text-xl sm:text-base transition active:scale-95 touch-manipulation"
                             style={{ background: C.dark, color: C.bg, border: `2px solid ${C.mid}`, borderRadius: 3 }}>▲</button>
                     <div />
                     <button onClick={() => moveDir(-1,0)}
-                            className="p-3.5 font-bold text-base transition active:scale-95"
+                            className="p-4 sm:p-3.5 font-bold text-xl sm:text-base transition active:scale-95 touch-manipulation"
                             style={{ background: C.dark, color: C.bg, border: `2px solid ${C.mid}`, borderRadius: 3 }}>◀</button>
                     <div style={{ background: C.dark, border: `2px solid ${C.mid}`, borderRadius: 3 }} />
                     <button onClick={() => moveDir(1,0)}
-                            className="p-3.5 font-bold text-base transition active:scale-95"
+                            className="p-4 sm:p-3.5 font-bold text-xl sm:text-base transition active:scale-95 touch-manipulation"
                             style={{ background: C.dark, color: C.bg, border: `2px solid ${C.mid}`, borderRadius: 3 }}>▶</button>
                     <div />
                     <button onClick={() => moveDir(0,1)}
-                            className="p-3.5 font-bold text-base transition active:scale-95"
+                            className="p-4 sm:p-3.5 font-bold text-xl sm:text-base transition active:scale-95 touch-manipulation"
                             style={{ background: C.dark, color: C.bg, border: `2px solid ${C.mid}`, borderRadius: 3 }}>▼</button>
                     <div />
                 </div>
 
-                <p className="mt-3 text-xs font-mono" style={{ color: "#444" }}>
-                    WASD / ARROWS · SPACE = PAUSE
+                <p className="text-xs font-mono flex-shrink-0" style={{ color: "#444" }}>
+                    WASD / ARROWS · SPACE = PAUSE · SWIPE ON CANVAS
                 </p>
             </div>
         </div>

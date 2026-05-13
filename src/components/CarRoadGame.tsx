@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
+import { useCanvasScale } from "@/hooks/useCanvasScale";
 
 const W = 360;
 const H = 580;
@@ -365,13 +366,15 @@ const CarRoadGame: React.FC = () => {
         return () => cancelAnimationFrame(rafRef.current);
     }, [spawnEnemy, explode]);
 
+    const { wrapRef, scale } = useCanvasScale(W, H);
+
     return (
-        <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+        <div className="bg-[#1a1a1a] text-white flex flex-col" style={{ height: "100dvh", overflow: "hidden" }}>
             <Navbar />
 
-            <div className="flex flex-col items-center justify-center flex-1 py-8 px-4">
+            <div className="flex flex-col items-center flex-1 min-h-0 py-2 px-3" style={{ gap: 6 }}>
                 {/* HUD */}
-                <div className="flex gap-8 mb-3 font-mono">
+                <div className="flex gap-6 font-mono flex-shrink-0">
                     <div className="text-center">
                         <div className="text-gray-500 text-xs">SCORE</div>
                         <div className="text-yellow-400 text-xl font-bold">{displayState.score}</div>
@@ -393,16 +396,18 @@ const CarRoadGame: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Canvas */}
-                <canvas
-                    ref={canvasRef}
-                    width={W}
-                    height={H}
-                    style={{ borderRadius: 12, boxShadow: '0 8px 40px rgba(0,0,0,0.7)', display: 'block' }}
-                />
+                {/* Canvas — constrained by both width & height */}
+                <div ref={wrapRef} className="flex-1 min-h-0 w-full flex items-center justify-center">
+                    <canvas
+                        ref={canvasRef}
+                        width={W}
+                        height={H}
+                        style={{ width: W * scale, height: H * scale, display: "block", borderRadius: 10, boxShadow: "0 6px 24px rgba(0,0,0,0.7)" }}
+                    />
+                </div>
 
-                {/* Buttons */}
-                <div className="mt-4 flex gap-3">
+                {/* Start / Restart */}
+                <div className="flex gap-3 flex-shrink-0">
                     {(!displayState.started || displayState.isGameOver) && (
                         <button onClick={start}
                                 className="px-8 py-3 bg-yellow-500 text-black font-bold rounded-xl hover:bg-yellow-400 transition active:scale-95 font-mono">
@@ -412,18 +417,18 @@ const CarRoadGame: React.FC = () => {
                 </div>
 
                 {/* Mobile controls */}
-                <div className="mt-5 flex gap-6">
+                <div className="flex gap-6 flex-shrink-0">
                     <button onPointerDown={moveLeft}
-                            className="w-20 h-16 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-2xl font-bold transition active:scale-95 active:bg-[#3a3a3a]">
+                            className="w-24 h-16 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-2xl font-bold transition active:scale-95 active:bg-[#3a3a3a] touch-manipulation">
                         ◀
                     </button>
                     <button onPointerDown={moveRight}
-                            className="w-20 h-16 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-2xl font-bold transition active:scale-95 active:bg-[#3a3a3a]">
+                            className="w-24 h-16 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-2xl font-bold transition active:scale-95 active:bg-[#3a3a3a] touch-manipulation">
                         ▶
                     </button>
                 </div>
 
-                <p className="mt-3 text-xs text-gray-600 font-mono">A / ← → / D · ENTER to restart</p>
+                <p className="text-xs text-gray-600 font-mono flex-shrink-0">A / ← → / D · ENTER to restart</p>
             </div>
         </div>
     );

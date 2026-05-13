@@ -22,6 +22,9 @@ import CrossyRoad from "./components/CrossyRoad";
 import PacmanGame from "./components/PacmanGame";
 import CarGame from "./components/CarRoadGame";
 import SnakeGame from "./components/SnakeGame";
+import DailyWord from "./components/DailyWord";
+import ZipGame from "./components/ZipGame";
+import PatchesGame from "./components/PatchesGame";
 
 // Tools
 import PasswordGenerator from "./pages/PasswordGenerator";
@@ -53,6 +56,9 @@ const App = () => (
                         <Route path="/pacmangame" element={<PacmanGame />} />
                         <Route path="/carroadgame" element={<CarGame />} />
                         <Route path="/snake" element={<SnakeGame />} />
+                        <Route path="/dailyword" element={<DailyWord />} />
+                        <Route path="/zip" element={<ZipGame />} />
+                        <Route path="/patches" element={<PatchesGame />} />
 
                         {/* Original tools */}
                         <Route path="/calculator" element={<Calculator />} />

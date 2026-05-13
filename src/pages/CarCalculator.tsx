@@ -76,13 +76,13 @@ export default function CarCalculator() {
                 <p className="text-gray-400 mb-8">Irish motor tax & fuel cost estimator</p>
 
                 {/* Tabs */}
-                <div className="flex gap-2 mb-8 bg-[#2a2a2a] p-1.5 rounded-2xl">
+                <div className="flex gap-2 mb-8 bg-[#2a2a2a] p-1.5 rounded-2xl w-full max-w-xs sm:max-w-none sm:w-auto">
                     <button onClick={() => setActiveTab("tax")}
-                            className={`px-8 py-2.5 rounded-xl font-semibold transition ${activeTab === "tax" ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
+                            className={`flex-1 sm:flex-none px-6 sm:px-8 py-2.5 rounded-xl font-semibold transition text-sm sm:text-base ${activeTab === "tax" ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
                         🏷️ Motor Tax
                     </button>
                     <button onClick={() => setActiveTab("fuel")}
-                            className={`px-8 py-2.5 rounded-xl font-semibold transition ${activeTab === "fuel" ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
+                            className={`flex-1 sm:flex-none px-6 sm:px-8 py-2.5 rounded-xl font-semibold transition text-sm sm:text-base ${activeTab === "fuel" ? "bg-yellow-500 text-black" : "text-gray-400 hover:text-white"}`}>
                         ⛽ Fuel Cost
                     </button>
                 </div>

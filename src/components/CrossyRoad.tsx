@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
+import { useCanvasScale } from "@/hooks/useCanvasScale";
 
 const TILE = 52;
 const COLS = 13;
@@ -252,6 +253,41 @@ export default function CrossyRoad() {
         return () => window.removeEventListener("keydown", onKey);
     }, [move, startLevel]);
 
+    // Touch swipe on canvas
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        let start: { x: number; y: number } | null = null;
+
+        const onTouchStart = (e: TouchEvent) => {
+            e.preventDefault();
+            start = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        };
+        const onTouchEnd = (e: TouchEvent) => {
+            if (!start) return;
+            e.preventDefault();
+            const dx = e.changedTouches[0].clientX - start.x;
+            const dy = e.changedTouches[0].clientY - start.y;
+            start = null;
+            const s = stateRef.current;
+            if (Math.abs(dx) < 20 && Math.abs(dy) < 20) {
+                // Tap = start/restart
+                if (s.phase === "start" || (s.phase === "dead" && s.lives <= 0 && s.deadTimer <= 0)) startLevel(true);
+                else if (s.phase === "levelup" && s.levelupTimer <= 0) startLevel(false);
+                return;
+            }
+            if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 1 : -1, 0);
+            else move(0, dy > 0 ? 1 : -1);
+        };
+
+        canvas.addEventListener("touchstart", onTouchStart, { passive: false });
+        canvas.addEventListener("touchend", onTouchEnd, { passive: false });
+        return () => {
+            canvas.removeEventListener("touchstart", onTouchStart);
+            canvas.removeEventListener("touchend", onTouchEnd);
+        };
+    }, [move, startLevel]);
+
     // Game loop
     useEffect(() => {
         const canvas = canvasRef.current!;
@@ -461,39 +497,43 @@ export default function CrossyRoad() {
         else if (s.phase === "levelup" && s.levelupTimer <= 0) startLevel(false);
     };
 
+    const { wrapRef, scale } = useCanvasScale(W, H);
+
     return (
-        <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+        <div className="bg-[#1a1a1a] text-white flex flex-col" style={{ height: "100dvh", overflow: "hidden" }}>
             <Navbar />
 
-            <div className="flex flex-col items-center justify-center flex-1 py-8 px-4">
+            <div className="flex flex-col items-center flex-1 min-h-0 py-2 px-3" style={{ gap: 6 }}>
                 {/* HUD */}
-                <div className="flex gap-8 mb-3 font-mono">
+                <div className="flex gap-6 font-mono flex-shrink-0">
                     <div className="text-center"><div className="text-gray-500 text-xs">SCORE</div><div className="text-yellow-400 text-xl font-bold">{ui.score}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">LIVES</div><div className="text-xl">{Array.from({length: ui.lives}, (_, i) => <span key={i}>❤️</span>)}{Array.from({length: Math.max(0, 3-ui.lives)}, (_, i) => <span key={i} className="opacity-20">❤️</span>)}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">LEVEL</div><div className="text-blue-400 text-xl font-bold">{ui.level}</div></div>
                     <div className="text-center"><div className="text-gray-500 text-xs">BEST</div><div className="text-green-400 text-xl font-bold">{ui.best}</div></div>
                 </div>
 
-                {/* Canvas */}
-                <canvas
-                    ref={canvasRef}
-                    width={W}
-                    height={H}
-                    onClick={handleOverlayClick}
-                    style={{ borderRadius: 12, boxShadow: "0 8px 40px rgba(0,0,0,0.7)", cursor: "pointer", display: "block" }}
-                />
-
-                {/* Mobile controls */}
-                <div className="mt-5 grid grid-cols-3 gap-2">
-                    <div />
-                    <button onClick={() => move(0,-1)} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▲</button>
-                    <div />
-                    <button onClick={() => move(-1,0)} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">◀</button>
-                    <button onClick={() => move(0,1)} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▼</button>
-                    <button onClick={() => move(1,0)} className="p-4 bg-[#2a2a2a] hover:bg-[#3a3a3a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90">▶</button>
+                {/* Canvas — fills remaining space, constrained by both width & height */}
+                <div ref={wrapRef} className="flex-1 min-h-0 w-full flex items-center justify-center">
+                    <canvas
+                        ref={canvasRef}
+                        width={W}
+                        height={H}
+                        onClick={handleOverlayClick}
+                        style={{ width: W * scale, height: H * scale, display: "block", borderRadius: 10, boxShadow: "0 6px 24px rgba(0,0,0,0.7)", cursor: "pointer" }}
+                    />
                 </div>
 
-                <p className="mt-3 text-xs text-gray-600 font-mono">ARROW KEYS · CLICK CANVAS TO START</p>
+                {/* D-pad */}
+                <div className="grid grid-cols-3 flex-shrink-0" style={{ gap: 6 }}>
+                    <div />
+                    <button onClick={() => move(0,-1)} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▲</button>
+                    <div />
+                    <button onClick={() => move(-1,0)} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">◀</button>
+                    <button onClick={() => move(0,1)} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▼</button>
+                    <button onClick={() => move(1,0)} className="p-4 bg-[#2a2a2a] border-2 border-[#3a3a3a] hover:border-yellow-500 rounded-xl text-xl font-bold transition active:scale-90 touch-manipulation">▶</button>
+                </div>
+
+                <p className="text-xs text-gray-600 font-mono flex-shrink-0">ARROWS · SWIPE · TAP TO START</p>
             </div>
         </div>
     );

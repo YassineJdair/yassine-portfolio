@@ -100,7 +100,7 @@ export default function TaskTracker() {
                     <h1 className="text-3xl font-bold text-center">✅ Task Tracker</h1>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-4 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         {[
                             { label: "Total", value: stats.total, color: "text-white" },
                             { label: "Done", value: stats.done, color: "text-green-400" },
