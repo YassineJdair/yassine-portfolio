@@ -1,33 +1,39 @@
-# 👨‍💻 Yassine Jdair – Software Engineer Portfolio
+# Yassine Jdair – Developer Portfolio
 
-Welcome to my personal developer portfolio! This site serves as a digital snapshot of my skills, interests, and passion for building intuitive software solutions. It showcases both professional capabilities and personal experiments in code.
+[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev)
+
+Personal portfolio and collection of live web apps, games and dev tools — all built from scratch.
+
+🌐 **[yassinejdair.dev](https://www.yassinejdair.dev)**
 
 ---
 
-## 🖥️ Live Preview
+## 🚀 Getting Started
 
-## **https://yassine-mac.netlify.app/**:
-
-## ✏️ How can I edit this code?
-
-There are several ways of editing your application:
-
-### ✅ Use your preferred IDE
-
-If you want to work locally using your own IDE, follow these steps:
-
-> **Requirements**: You need Node.js & npm installed. [Install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
+npm run build
 ```
+
+## 🧱 Built With
+
+- **React 18** + **TypeScript**
+- **Vite** — build tool
+- **Tailwind CSS** + **shadcn/ui** — styling
+- **React Router v6** — routing
+
+## 👤 Author
+
+**Yassine Jdair**
+- 🌐 [yassinejdair.dev](https://www.yassinejdair.dev)
+- 💼 [LinkedIn](https://www.linkedin.com/in/yassinejdair/)
+- 🐙 [GitHub](https://github.com/YassineJdair)
+- 📧 yassinejdair@gmail.com
+
+## 📄 License
+
+MIT

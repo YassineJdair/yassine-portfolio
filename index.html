@@ -1,34 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ─── BASIC META ───────────────────────────────────────────── -->
-    <title>Yassine.dev</title>
-    <meta name="description" content="Yassine Jdair – Developer Portfolio" />
+    <!-- ─── PRIMARY SEO ──────────────────────────────────────────── -->
+    <title>Yassine Jdair – Software Engineer & Developer Portfolio</title>
+    <meta name="description" content="Yassine Jdair – Software Engineer at Dell Technologies, Limerick. Portfolio of web apps, games and dev tools built with React, TypeScript and Node.js." />
     <meta name="author" content="Yassine Jdair" />
+    <meta name="keywords" content="Yassine Jdair, Software Engineer, Developer Portfolio, React, TypeScript, Node.js, Limerick, Ireland" />
+    <link rel="canonical" href="https://www.yassinejdair.dev/" />
 
-    <meta property="og:title" content="Yassine.dev" />
-    <meta
-      property="og:description"
-      content="Projects, experiments & articles by Yassine Jdair"
-    />
-    <meta property="og:type" content="website" />
-    <!-- Replace with your own image or remove the tag entirely -->
-    <meta property="og:image" content="/og-cover.png" />
+    <!-- ─── OPEN GRAPH ────────────────────────────────────────────── -->
+    <meta property="og:type"         content="website" />
+    <meta property="og:url"          content="https://www.yassinejdair.dev/" />
+    <meta property="og:title"        content="Yassine Jdair – Software Engineer" />
+    <meta property="og:description"  content="Portfolio of web apps, games and dev tools built by Yassine Jdair." />
+    <meta property="og:image"        content="https://www.yassinejdair.dev/og-cover.png" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name"    content="Yassine Jdair" />
+    <meta property="og:locale"       content="en_IE" />
 
-    <!-- ─── TWITTER / X CARDS ─────────────────────────────────────── -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <!-- If you have a Twitter username, add it here (omit the “@”) -->
-    <meta name="twitter:site" content="@YJdair" />
-    <meta name="twitter:image" content="/og-cover.png" />
-  </head>
+    <!-- ─── TWITTER / X ──────────────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:site"        content="@YJdair" />
+    <meta name="twitter:creator"     content="@YJdair" />
+    <meta name="twitter:title"       content="Yassine Jdair – Software Engineer" />
+    <meta name="twitter:description" content="Portfolio of web apps, games and dev tools." />
+    <meta name="twitter:image"       content="https://www.yassinejdair.dev/og-cover.png" />
 
-  <body>
-    <div id="root"></div>
+    <!-- ─── FAVICON ──────────────────────────────────────────────── -->
+    <link rel="icon"             href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- Your app scripts -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <!-- ─── STRUCTURED DATA (JSON-LD) ───────────────────────────── -->
+    <!--
+      This tells Google who you are and triggers your logo in search results.
+
+      ACTION REQUIRED before deploying:
+        1. Add your logo to /public/logo.png (512×512px square recommended)
+        2. Add a preview image to /public/og-cover.png (1200×630px)
+        3. Verify at https://search.google.com/test/rich-results
+        4. Submit sitemap in Google Search Console
+    -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Yassine Jdair",
+            "url": "https://www.yassinejdair.dev",
+            "image": {
+                "@type": "ImageObject",
+                "url": "https://www.yassinejdair.dev/logo.png",
+                "width": 512,
+                "height": 512
+            },
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.yassinejdair.dev/logo.png",
+                "width": 512,
+                "height": 512
+            },
+            "jobTitle": "Software Engineer",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Dell Technologies"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Limerick",
+                "addressCountry": "IE"
+            },
+            "email": "yassinejdair@gmail.com",
+            "sameAs": [
+                "https://github.com/YassineJdair",
+                "https://www.linkedin.com/in/yassinejdair/",
+                "https://twitter.com/YJdair"
+            ]
+        }
+    </script>
+</head>
+
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
 </html>
