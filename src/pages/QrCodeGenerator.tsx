@@ -15,6 +15,7 @@ export default function QrCodeGenerator() {
     const [text, setText] = useState("https://www.yassinejdair.dev");
     const [size, setSize] = useState(320);
     const [colorIdx, setColorIdx] = useState(0);
+    const [transparentBg, setTransparentBg] = useState(false);
     const [error, setError] = useState("");
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -31,11 +32,11 @@ export default function QrCodeGenerator() {
         QRCode.toCanvas(canvasRef.current, text, {
             width: size,
             margin: 2,
-            color: { dark, light },
+            color: { dark, light: transparentBg ? "#00000000" : light },
         })
             .then(() => setError(""))
             .catch(() => setError("Couldn't generate a QR code for that input."));
-    }, [text, size, colorIdx]);
+    }, [text, size, colorIdx, transparentBg]);
 
     const download = () => {
         if (!canvasRef.current) return;
@@ -55,7 +56,15 @@ export default function QrCodeGenerator() {
                 <div className="w-full max-w-md space-y-4">
                     {/* Preview */}
                     <div className="bg-[#2a2a2a] rounded-2xl p-6 flex flex-col items-center gap-4">
-                        <div className="bg-white rounded-xl p-3">
+                        <div
+                            className={`rounded-xl p-3 ${transparentBg ? "" : "bg-white"}`}
+                            style={transparentBg ? {
+                                backgroundImage:
+                                    "linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%)",
+                                backgroundSize: "16px 16px",
+                                backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0px",
+                            } : undefined}
+                        >
                             <canvas ref={canvasRef} className="rounded" />
                         </div>
                         {error && <p className="text-red-400 text-sm">{error}</p>}
@@ -111,6 +120,14 @@ export default function QrCodeGenerator() {
                                 ))}
                             </div>
                         </div>
+
+                        <label className="flex items-center justify-between cursor-pointer">
+                            <span className="text-gray-300 text-sm">Transparent background</span>
+                            <div onClick={() => setTransparentBg(!transparentBg)}
+                                 className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer ${transparentBg ? "bg-yellow-500" : "bg-[#3a3a3a]"}`}>
+                                <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${transparentBg ? "translate-x-7" : "translate-x-1"}`} />
+                            </div>
+                        </label>
                     </div>
                 </div>
             </div>
