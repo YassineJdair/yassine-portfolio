@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import { useCanvasScale } from "@/hooks/useCanvasScale";
+import { useSEO } from '@/hooks/useSEO';
 
 const W = 360;
 const H = 580;
@@ -100,6 +101,7 @@ const darken = (hex: string) => {
 };
 
 const CarRoadGame: React.FC = () => {
+    useSEO('Car Road Game – Yassine Jdair', 'Dodge traffic and survive as long as you can in this browser game.', '/carroadgame');
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const stateRef = useRef({
         playerLane: 1,

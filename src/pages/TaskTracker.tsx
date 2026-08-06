@@ -1,5 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Layout from '@/components/Layout';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useSEO } from '@/hooks/useSEO';
 
 type Priority = "high" | "medium" | "low";
 type Category = "Work" | "Personal" | "Learning" | "Health" | "Other";
@@ -32,9 +34,8 @@ const SAMPLE: Task[] = [
 ];
 
 export default function TaskTracker() {
-    const [tasks, setTasks] = useState<Task[]>(() => {
-        try { return JSON.parse(localStorage.getItem("tasks-v2") || JSON.stringify(SAMPLE)); } catch { return SAMPLE; }
-    });
+    useSEO("Task Tracker – Yassine Jdair", "A simple application to track and manage your daily tasks and improve productivity.", "/task-tracker");
+    const [tasks, setTasks] = useLocalStorage<Task[]>("tasks-v2", SAMPLE);
     const [filter, setFilter] = useState<"all"|"active"|"done">("all");
     const [catFilter, setCatFilter] = useState<Category|"All">("All");
     const [priorityFilter, setPriorityFilter] = useState<Priority|"All">("All");
@@ -48,8 +49,6 @@ export default function TaskTracker() {
     const [category, setCategory] = useState<Category>("Work");
     const [due, setDue] = useState(today());
     const [notes, setNotes] = useState("");
-
-    useEffect(() => { localStorage.setItem("tasks-v2", JSON.stringify(tasks)); }, [tasks]);
 
     const clearForm = () => { setText(""); setPriority("medium"); setCategory("Work"); setDue(today()); setNotes(""); setEditId(null); setShowForm(false); };
 

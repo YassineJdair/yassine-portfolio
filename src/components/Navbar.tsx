@@ -16,6 +16,12 @@ const ventures = [
         url: "https://www.autolab.ie",
         emoji: "🚗",
     },
+    {
+        name: "HydroSolutions",
+        description: "Mobile detailing & window cleaning",
+        url: "https://www.hydrosolutions.ie",
+        emoji: "💧",
+    },
 ];
 
 const NAV_LINKS = [

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import { useCanvasScale } from "@/hooks/useCanvasScale";
+import { useSEO } from "@/hooks/useSEO";
 
 const T = 28;
 const COLS = 19;
@@ -85,6 +86,7 @@ function bfs(maze: number[][], from: Pos, to: Pos): Dir | null {
 }
 
 export default function PacmanGame() {
+    useSEO("Pacman – Yassine Jdair", "Eat the dots, dodge the ghosts. A browser Pacman game built from scratch.", "/pacmangame");
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const s = useRef({
         maze: freshMaze(),

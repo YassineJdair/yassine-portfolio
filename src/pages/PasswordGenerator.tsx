@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { useState, useCallback } from "react";
+import { useSEO } from "@/hooks/useSEO";
 
 const UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const LOWER = "abcdefghijklmnopqrstuvwxyz";
@@ -7,6 +8,7 @@ const NUMS = "0123456789";
 const SYMS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
 export default function PasswordGenerator() {
+    useSEO("Password Generator – Yassine Jdair", "Generate strong, secure passwords with custom length, character sets, and a strength indicator.", "/password-generator");
     const [length, setLength] = useState(16);
     const [upper, setUpper] = useState(true);
     const [lower, setLower] = useState(true);

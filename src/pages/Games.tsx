@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
+import { useSEO } from "@/hooks/useSEO";
 
 const games = [
     {
@@ -58,6 +59,12 @@ const games = [
 ];
 
 const GamesMenu = () => {
+    useSEO(
+        "Games – Yassine Jdair",
+        "7 browser games built from scratch — Snake, Pacman, Crossy Road, Daily Word, Daily Zip, Daily Patches and more.",
+        "/games"
+    );
+
     return (
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-screen gap-8 px-6 py-12">

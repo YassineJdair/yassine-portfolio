@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSEO } from "@/hooks/useSEO";
 
 interface Entry {
     id: string;
@@ -39,12 +41,9 @@ const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov
 const todayStr = () => new Date().toISOString().split("T")[0];
 
 export default function ExpenseTracker() {
-    const [entries, setEntries] = useState<Entry[]>(() => {
-        try { return JSON.parse(localStorage.getItem("et-entries") || "[]"); } catch { return []; }
-    });
-    const [budgets, setBudgets] = useState<Budget[]>(() => {
-        try { return JSON.parse(localStorage.getItem("et-budgets") || "[]"); } catch { return []; }
-    });
+    useSEO("Finance Tracker – Yassine Jdair", "Full budget planner with income vs expenses, category budgets, transaction history, and smart insights.", "/expense-tracker");
+    const [entries, setEntries] = useLocalStorage<Entry[]>("et-entries", []);
+    const [budgets, setBudgets] = useLocalStorage<Budget[]>("et-budgets", []);
 
     const now = new Date();
     const [viewMonth, setViewMonth] = useState(now.getMonth());
@@ -66,9 +65,6 @@ export default function ExpenseTracker() {
     // Budget form
     const [budgetCat, setBudgetCat] = useState(EXPENSE_CATS[0]);
     const [budgetLimit, setBudgetLimit] = useState("");
-
-    useEffect(() => { localStorage.setItem("et-entries", JSON.stringify(entries)); }, [entries]);
-    useEffect(() => { localStorage.setItem("et-budgets", JSON.stringify(budgets)); }, [budgets]);
 
     // Month entries
     const monthEntries = useMemo(() =>

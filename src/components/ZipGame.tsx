@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Navbar from "@/components/Navbar";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSEO } from "@/hooks/useSEO";
 
 // ─── Daily seed ───────────────────────────────────────────────────────────────
 const EPOCH = new Date("2025-01-01").getTime();
@@ -93,6 +95,7 @@ interface Stats { played: number; wins: number; streak: number; maxStreak: numbe
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function ZipGame() {
+    useSEO("Daily Zip – Yassine Jdair", "Trail-blazing puzzle, connect 1 to N and fill every cell.", "/zip");
     const dayIdx = getDayIndex();
     const [psize, flatNums] = PUZZLES[dayIdx % PUZZLES.length];
 
@@ -119,25 +122,17 @@ export default function ZipGame() {
             return saved.path ?? [];
         } catch { return []; }
     };
-    const loadStats = (): Stats => {
-        try { const r = localStorage.getItem("zip-stats"); if (r) return JSON.parse(r); } catch {}
-        return { played: 0, wins: 0, streak: 0, maxStreak: 0 };
-    };
-
     const [path, setPath] = useState<number[]>(() => loadPath());
     const [won, setWon]   = useState(() => {
         const p = loadPath();
         return p.length === psize * psize;
     });
     const [showStats, setShowStats] = useState(false);
-    const [stats, setStats] = useState<Stats>(() => loadStats());
+    const [stats, setStats] = useLocalStorage<Stats>("zip-stats", { played: 0, wins: 0, streak: 0, maxStreak: 0 });
 
     useEffect(() => {
         localStorage.setItem(todayKey(), JSON.stringify({ path, dayIdx }));
     }, [path, dayIdx]);
-    useEffect(() => {
-        localStorage.setItem("zip-stats", JSON.stringify(stats));
-    }, [stats]);
     useEffect(() => { if (won) setTimeout(() => setShowStats(true), 900); }, [won]);
 
     // ── Next required number ─────────────────────────────────────────────────────

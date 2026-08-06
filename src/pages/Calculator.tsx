@@ -1,11 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import Layout from '@/components/Layout';
+import { useSEO } from '@/hooks/useSEO';
 
 type HistoryEntry = { expr: string; result: string };
 
 const BTN = "flex items-center justify-center rounded-xl font-semibold text-lg h-14 transition-all duration-100 active:scale-95 cursor-pointer select-none";
 
 export default function Calculator() {
+    useSEO(
+        "Calculator – Yassine Jdair",
+        "A modern calculator app with scientific functions, history and keyboard support.",
+        "/calculator"
+    );
+
     const [display, setDisplay] = useState("0");
     const [expression, setExpression] = useState("");
     const [stored, setStored] = useState<string | null>(null);

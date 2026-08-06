@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSEO } from "@/hooks/useSEO";
 
 // ─── Word list (500 curated 5-letter words) ───────────────────────────────────
 const WORDS = [
@@ -188,6 +190,7 @@ const KB_COLORS: Record<string, { bg: string; text: string }> = {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function DailyWord() {
+    useSEO("Daily Word – Yassine Jdair", "Wordle-style word game, a new word every day, the same for everyone.", "/dailyword");
     const target = getTodayWord();
     const dayIdx = getDayIndex();
 
@@ -203,14 +206,6 @@ export default function DailyWord() {
         return { guesses: [], phase: "playing" };
     };
 
-    const loadStats = (): Stats => {
-        try {
-            const raw = localStorage.getItem("dw-stats");
-            if (raw) return JSON.parse(raw);
-        } catch {}
-        return { played: 0, wins: 0, streak: 0, maxStreak: 0, distribution: [0,0,0,0,0,0] };
-    };
-
     const saved = loadSaved();
     const [guesses, setGuesses] = useState<string[]>(saved.guesses);
     const [current, setCurrent] = useState("");
@@ -223,7 +218,7 @@ export default function DailyWord() {
     const [shakeRow, setShakeRow] = useState<number | null>(null);
     const [toast, setToast] = useState<string | null>(null);
     const [showStats, setShowStats] = useState(false);
-    const [stats, setStats] = useState<Stats>(loadStats);
+    const [stats, setStats] = useLocalStorage<Stats>("dw-stats", { played: 0, wins: 0, streak: 0, maxStreak: 0, distribution: [0,0,0,0,0,0] });
     const [copied, setCopied] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -231,11 +226,6 @@ export default function DailyWord() {
     useEffect(() => {
         localStorage.setItem(todayKey(), JSON.stringify({ guesses, phase, dayIndex: dayIdx }));
     }, [guesses, phase, dayIdx]);
-
-    // Save stats
-    useEffect(() => {
-        localStorage.setItem("dw-stats", JSON.stringify(stats));
-    }, [stats]);
 
     // Show stats after game ends
     useEffect(() => {

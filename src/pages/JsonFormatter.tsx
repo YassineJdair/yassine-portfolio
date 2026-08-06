@@ -1,7 +1,9 @@
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
+import { useSEO } from "@/hooks/useSEO";
 
 export default function JsonFormatter() {
+    useSEO("JSON Formatter – Yassine Jdair", "Format, validate and minify JSON instantly with syntax highlighting and one-click copy.", "/json-formatter");
     const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
     const [error, setError] = useState("");

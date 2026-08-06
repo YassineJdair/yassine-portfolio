@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout';
 import { Briefcase, Calendar } from 'lucide-react';
+import { useSEO } from '@/hooks/useSEO';
 
 const experiences = [
     {
@@ -35,6 +36,14 @@ const experiences = [
         tags: ["Wraps", "PPF", "Customer Experience", "Social Media"],
     },
     {
+        company: "HydroSolutions",
+        role: "Co-Founder",
+        period: "08/2026 - Present",
+        current: true,
+        description: "Co-founded a mobile car detailing and window cleaning business, handling service delivery, customer bookings, and growth strategy.",
+        tags: ["Mobile Detailing", "Window Cleaning", "Customer Service", "Business Growth"],
+    },
+    {
         company: "DP Car Detailing",
         role: "Manager",
         period: "06/2021 - 03/2025",
@@ -61,6 +70,12 @@ const experiences = [
 ];
 
 const Experience = () => {
+    useSEO(
+        "Experience – Yassine Jdair",
+        "Professional experience of Yassine Jdair, Software Engineer at Dell Technologies, Limerick.",
+        "/experience"
+    );
+
     return (
         <Layout>
             <div className="py-12">

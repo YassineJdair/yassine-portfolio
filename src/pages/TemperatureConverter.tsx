@@ -5,21 +5,22 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDown } from 'lucide-react';
+import { useSEO } from '@/hooks/useSEO';
+import { celsiusToFahrenheit, fahrenheitToCelsius } from '@/lib/temperature';
 
 const TemperatureConverter = () => {
+  useSEO("Temperature Converter – Yassine Jdair", "Easily convert between different temperature units with this sleek, user-friendly tool.", "/temperature-converter");
   const [celsius, setCelsius] = useState('');
   const [fahrenheit, setFahrenheit] = useState('');
 
   const convertToFahrenheit = (celsius: string) => {
     if (!celsius) return '';
-    const value = parseFloat(celsius);
-    return ((value * 9/5) + 32).toFixed(2);
+    return celsiusToFahrenheit(parseFloat(celsius)).toFixed(2);
   };
 
   const convertToCelsius = (fahrenheit: string) => {
     if (!fahrenheit) return '';
-    const value = parseFloat(fahrenheit);
-    return ((value - 32) * 5/9).toFixed(2);
+    return fahrenheitToCelsius(parseFloat(fahrenheit)).toFixed(2);
   };
 
   const handleCelsiusChange = (value: string) => {

@@ -1,110 +1,74 @@
 import Layout from "@/components/Layout";
-import { Code, Heart, ArrowRight, Mail, Github, Phone } from "lucide-react";
+import { ArrowRight, Mail, Github, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSEO } from "@/hooks/useSEO";
+
+const HEADLINE_SKILLS = ["Java", "TypeScript", "React", "Node.js"];
 
 const Index = () => {
+  useSEO(
+    "Yassine Jdair – Software Engineer & Developer Portfolio",
+    "Yassine Jdair – Software Engineer at Dell Technologies, Limerick. Portfolio of web apps, games and dev tools built with React, TypeScript and Node.js.",
+    "/"
+  );
+
   return (
     <Layout>
-      <div className="py-12 md:py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h1 className="text-4xl font-bold mb-6">Yassine Jdair</h1>
+      <div className="py-16 md:py-32">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-5xl font-bold mb-4">Yassine Jdair</h1>
+          <p className="text-xl text-muted-foreground mb-6">
+            Software Engineer at Dell Technologies — building web apps, tools and games from scratch.
+          </p>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 text-muted-foreground text-sm">
-              <a
-                href="mailto:yassinejdair@gmail.com"
-                className="flex items-center gap-2 hover:text-primary transition-colors"
-              >
-                <Mail className="h-4 w-4" />
-                yassinejdair@gmail.com
-              </a>
-              <a
-                href="tel:+353851244472"
-                className="flex items-center gap-2 hover:text-primary transition-colors"
-              >
-                <Phone className="h-4 w-4" />
-                +353 85 124 4472
-              </a>
-              <a
-                href="https://github.com/YassineJdair"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-primary transition-colors"
-              >
-                <Github className="h-4 w-4" />
-                GitHub
-              </a>
-            </div>
+          <div className="flex flex-wrap justify-center gap-3 mb-8 text-sm font-mono text-muted-foreground">
+            {HEADLINE_SKILLS.map((skill) => (
+              <span key={skill} className="px-3 py-1 rounded-full border border-border/50 bg-card/50">
+                {skill}
+              </span>
+            ))}
+          </div>
 
-            {/* Code Snippet */}
-            <div className="font-mono text-sm text-left leading-relaxed mb-12">
-              <code className="block text-muted-foreground">
-                <span className="text-primary">const</span> engineer = {"{"}
-              </code>
-              <code className="block pl-4">
-                <span className="text-muted-foreground">name:</span>{" "}
-                <span className="text-primary">"Yassine Jdair"</span>,
-              </code>
-              <code className="block pl-4">
-                <span className="text-muted-foreground">role:</span>{" "}
-                <span className="text-primary">"Software Engineer"</span>,
-              </code>
-              <code className="block pl-4">
-                <span className="text-muted-foreground">passions:</span> [
-                <span className="text-primary">"Web Development"</span>,{" "}
-                <span className="text-primary">"System Design"</span>,{" "}
-                <span className="text-primary">"UI/UX Design"</span>]
-              </code>
-              <code className="block text-muted-foreground">{"}"};</code>
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-center gap-4 mb-10 text-muted-foreground text-sm">
+            <a
+              href="mailto:yassinejdair@gmail.com"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <Mail className="h-4 w-4" />
+              yassinejdair@gmail.com
+            </a>
+            <a
+              href="tel:+353851244472"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <Phone className="h-4 w-4" />
+              +353 85 124 4472
+            </a>
+            <a
+              href="https://github.com/YassineJdair"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-primary transition-colors"
+            >
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+          </div>
 
-            {/* Technical Expertise */}
-            <div className="mb-12 text-left">
-              <h2 className="flex items-center gap-2 text-xl font-semibold mb-4">
-                <Code className="h-5 w-5 text-primary" /> Technical Expertise
-              </h2>
-              <div className="flex flex-wrap gap-4 text-sm font-mono text-muted-foreground">
-                {[
-                  "Java",
-                  "Spring Boot",
-                  "JavaScript",
-                  "Node.js",
-                  "TypeScript",
-                  "HTML",
-                  "MySQL",
-                  "Git",
-                ].map((tech) => (
-                  <span key={tech}>{tech}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* Interests */}
-            <div className="mb-12 text-left">
-              <h2 className="flex items-center gap-2 text-xl font-semibold mb-4">
-                <Heart className="h-5 w-5 text-primary" /> Interests
-              </h2>
-              <div className="flex flex-wrap gap-4 text-sm font-mono text-muted-foreground">
-                {[
-                  "Software UI/UX",
-                  "Blockchain",
-                  "Networking",
-                  "Electronics",
-                  "Cars",
-                  "Content Creation",
-                ].map((interest) => (
-                  <span key={interest}>{interest}</span>
-                ))}
-              </div>
-            </div>
-
-            {/* View Projects Button */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/projects"
-              className="inline-flex items-center justify-center w-60 h-10 rounded-full bg-background text-primary border border-border hover:bg-primary hover:text-background transition-colors"
+              className="inline-flex items-center justify-center gap-2 w-60 h-11 rounded-full bg-primary text-background hover:bg-primary/90 transition-colors font-medium"
               title="View My Projects"
             >
-              View My Projects <ArrowRight className="h-8 w-8" />
+              View My Projects <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              to="/about"
+              className="inline-flex items-center justify-center w-60 h-11 rounded-full bg-background text-primary border border-border hover:bg-primary hover:text-background transition-colors font-medium"
+              title="About Me"
+            >
+              About Me
             </Link>
           </div>
         </div>

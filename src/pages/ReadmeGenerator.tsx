@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
+import { useSEO } from "@/hooks/useSEO";
 
 interface ReadmeData {
     title: string;
@@ -77,6 +78,7 @@ This project is [${d.license}](LICENSE) licensed.
 }
 
 export default function ReadmeGenerator() {
+    useSEO("README Generator – Yassine Jdair", "Fill in your project details and get a perfectly formatted README.md ready to copy.", "/readme-generator");
     const [data, setData] = useState<ReadmeData>(DEFAULT);
     const [view, setView] = useState<"edit" | "preview">("edit");
     const [copied, setCopied] = useState(false);

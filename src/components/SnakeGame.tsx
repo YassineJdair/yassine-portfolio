@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { useCanvasScale } from "@/hooks/useCanvasScale";
+import { useSEO } from "@/hooks/useSEO";
 
 const COLS = 24;
 const ROWS = 18;
@@ -30,6 +31,7 @@ function randPos(exclude: Pos[]): Pos {
 }
 
 export default function SnakeGame() {
+    useSEO("Snake – Yassine Jdair", "Classic Nokia Snake, with enemies and levels. Built from scratch.", "/snake");
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rafRef = useRef(0);
 

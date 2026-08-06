@@ -1,7 +1,14 @@
 import Layout from '@/components/Layout';
 import ProjectCard from '@/components/ProjectCard';
+import { useSEO } from '@/hooks/useSEO';
 
 const Projects = () => {
+    useSEO(
+        "Projects – Yassine Jdair",
+        "Live tools, calculators, trackers and dev utilities built from scratch by Yassine Jdair.",
+        "/projects"
+    );
+
     const projects = [
         // Original
         {
@@ -65,16 +72,26 @@ const Projects = () => {
             description: "Fill in your project details and get a perfectly formatted README.md ready to copy.",
             link: "/readme-generator"
         },
+        {
+            title: "QR Code Generator",
+            description: "Turn any text or URL into a downloadable QR code, entirely in your browser.",
+            link: "/qr-code-generator"
+        },
+        {
+            title: "Mortgage Calculator",
+            description: "Irish mortgage affordability calculator — solo or joint income, Central Bank lending limits, and Help to Buy, First Home Scheme & Local Authority Home Loan eligibility.",
+            link: "/mortgage-calculator"
+        },
     ];
 
     const categories = [
         {
             label: "🛠️ Tools & Utilities",
-            items: ["Password Generator", "JSON Formatter", "README Generator", "Temperature Converter", "Calculator"],
+            items: ["Password Generator", "JSON Formatter", "README Generator", "QR Code Generator", "Temperature Converter", "Calculator"],
         },
         {
             label: "💰 Finance & Life",
-            items: ["Finance Tracker", "Salary Calculator", "Car Calculator"],
+            items: ["Finance Tracker", "Salary Calculator", "Car Calculator", "Mortgage Calculator"],
         },
         {
             label: "📋 Productivity",

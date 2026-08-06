@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import { useCanvasScale } from "@/hooks/useCanvasScale";
+import { useSEO } from "@/hooks/useSEO";
 
 const TILE = 52;
 const COLS = 13;
@@ -174,6 +175,7 @@ const drawTree = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
 // ────────────────────────────────────────────────────────────────
 
 export default function CrossyRoad() {
+    useSEO("Crossy Road – Yassine Jdair", "Cross the road without getting squashed! A browser game built from scratch.", "/crossyroad");
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const stateRef = useRef({
         px: Math.floor(COLS / 2), py: ROWS - 1,

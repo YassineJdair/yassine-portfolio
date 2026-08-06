@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Navbar from "@/components/Navbar";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSEO } from "@/hooks/useSEO";
 
 // ─── Daily seed ───────────────────────────────────────────────────────────────
 const EPOCH = new Date("2025-01-01").getTime();
@@ -64,6 +66,7 @@ interface Stats { played: number; wins: number; streak: number; maxStreak: numbe
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function PatchesGame() {
+    useSEO("Daily Patches – Yassine Jdair", "Nonogram puzzle, fill the grid from number clues.", "/patches");
     const N = 5;
     const dayIdx   = getDayIndex();
     const [solStr, label] = PUZZLES[dayIdx % PUZZLES.length];
@@ -85,11 +88,6 @@ export default function PatchesGame() {
         } catch {}
         return blank();
     };
-    const loadStats = (): Stats => {
-        try { const r = localStorage.getItem("pat-stats"); if (r) return JSON.parse(r); } catch {}
-        return { played: 0, wins: 0, streak: 0, maxStreak: 0 };
-    };
-
     const [grid, setGrid]       = useState<Cell[][]>(() => loadGrid());
     const [won, setWon]         = useState(() => loadGrid().every(row => row.every(c => c !== "unknown") && true)
         && (() => { const g = loadGrid(); return rowClues.every((rc, r) => cluesMatch(computeClue(g[r].map(c => c === "filled")), rc)) && colClues.every((cc, c) => cluesMatch(computeClue(g.map(row => row[c] === "filled")), cc)); })()
@@ -97,13 +95,12 @@ export default function PatchesGame() {
     const [mode, setMode]       = useState<Mode>("fill");
     const [showStats, setShowStats] = useState(false);
     const [showReveal, setShowReveal] = useState(false);
-    const [stats, setStats]     = useState<Stats>(() => loadStats());
+    const [stats, setStats]     = useLocalStorage<Stats>("pat-stats", { played: 0, wins: 0, streak: 0, maxStreak: 0 });
     const [flash, setFlash]     = useState<string | null>(null);
 
     useEffect(() => {
         localStorage.setItem(todayKey(), JSON.stringify({ grid, dayIdx }));
     }, [grid, dayIdx]);
-    useEffect(() => { localStorage.setItem("pat-stats", JSON.stringify(stats)); }, [stats]);
     useEffect(() => { if (won) setTimeout(() => { setShowReveal(true); }, 700); }, [won]);
 
     // ── Win check ──────────────────────────────────────────────────────────────

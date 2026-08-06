@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useSEO } from "@/hooks/useSEO";
 
 interface Habit {
     id: string;
@@ -38,17 +40,12 @@ const getStreak = (completions: string[]) => {
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function HabitTracker() {
-    const [habits, setHabits] = useState<Habit[]>(() => {
-        try { return JSON.parse(localStorage.getItem("habits") || "[]"); } catch { return []; }
-    });
+    useSEO("Habit Tracker – Yassine Jdair", "Build daily habits and track streaks with a 7-day grid, custom colours, and emoji per habit.", "/habit-tracker");
+    const [habits, setHabits] = useLocalStorage<Habit[]>("habits", []);
     const [showAdd, setShowAdd] = useState(false);
     const [newName, setNewName] = useState("");
     const [newEmoji, setNewEmoji] = useState("💪");
     const [newColor, setNewColor] = useState(COLORS[0]);
-
-    useEffect(() => {
-        localStorage.setItem("habits", JSON.stringify(habits));
-    }, [habits]);
 
     const addHabit = () => {
         if (!newName.trim()) return;

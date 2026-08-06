@@ -16,7 +16,7 @@
     <meta property="og:url"          content="https://www.yassinejdair.dev/" />
     <meta property="og:title"        content="Yassine Jdair – Software Engineer" />
     <meta property="og:description"  content="Portfolio of web apps, games and dev tools built by Yassine Jdair." />
-    <meta property="og:image"        content="https://www.yassinejdair.dev/og-cover.png" />
+    <meta property="og:image"        content="https://www.yassinejdair.dev/logo.png" />
     <meta property="og:image:width"  content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name"    content="Yassine Jdair" />
@@ -28,21 +28,20 @@
     <meta name="twitter:creator"     content="@YJdair" />
     <meta name="twitter:title"       content="Yassine Jdair – Software Engineer" />
     <meta name="twitter:description" content="Portfolio of web apps, games and dev tools." />
-    <meta name="twitter:image"       content="https://www.yassinejdair.dev/og-cover.png" />
+    <meta name="twitter:image"       content="https://www.yassinejdair.dev/logo.png" />
 
     <!-- ─── FAVICON ──────────────────────────────────────────────── -->
     <link rel="icon"             href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
 
     <!-- ─── STRUCTURED DATA (JSON-LD) ───────────────────────────── -->
     <!--
       This tells Google who you are and triggers your logo in search results.
 
-      ACTION REQUIRED before deploying:
-        1. Add your logo to /public/logo.png (512×512px square recommended)
-        2. Add a preview image to /public/og-cover.png (1200×630px)
-        3. Verify at https://search.google.com/test/rich-results
-        4. Submit sitemap in Google Search Console
+      NOTE: og:image / twitter:image / apple-touch-icon currently reuse
+      /public/logo.png (512×512). For a sharper social preview, add a
+      dedicated /public/og-cover.png (1200×630px) and point those three
+      tags at it instead.
     -->
     <script type="application/ld+json">
         {

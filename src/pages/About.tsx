@@ -1,72 +1,20 @@
 import Layout from "@/components/Layout";
-import { User, Heart, Coffee, Briefcase, GraduationCap, Wrench } from "lucide-react";
+import { User, Heart, Coffee, Briefcase, GraduationCap, Wrench, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useSEO } from "@/hooks/useSEO";
 
 const About = () => {
+    useSEO(
+        "About – Yassine Jdair",
+        "About Yassine Jdair — Service Delivery Engineer at Dell Technologies with a background in software implementation and systems support.",
+        "/about"
+    );
+
     const skills = {
         "Service Delivery & Ops": ["Service Delivery", "Operational Support", "Process Improvement", "Root Cause Analysis", "Issue Resolution"],
         "Development": ["Java", "JavaScript", "TypeScript", "Node.js", "Python", "MySQL"],
         "Tools": ["Git", "Jira", "Postman", "Workflow Automation", "Technical Documentation"],
     };
-
-    const experience = [
-        {
-            role: "Service Delivery Engineer 2",
-            company: "Dell Technologies",
-            period: "May 2026 – Present",
-            location: "Limerick, Ireland",
-            color: "border-blue-500/40",
-            badge: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-            current: true,
-            bullets: [
-                "Managing services operations backlog within the supply chain, ensuring customer orders in potential distress are resolved in a timely manner",
-                "Working with Global Operations, Engineering, IT, and Enablement teams to remove operational bottlenecks and ensure frictionless order flow across the EMEA services supply chain",
-                "Investigating root causes of recurring supply chain issues and implementing long term corrective fixes",
-                "Collaborating with Service Delivery Project Management, Services Enablement, and Partners to deliver a superior customer experience",
-                "Tracking and communicating progress on operational issues and process improvements",
-            ],
-        },
-        {
-            role: "Systems Support & Software Implementation Engineer",
-            company: "Blocworx",
-            period: "March 2025 – May 2026",
-            location: "Ireland",
-            color: "border-yellow-500/40",
-            badge: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20",
-            current: false,
-            bullets: [
-                "Gathered client requirements and translated them into system configurations, workflows, and technical solutions",
-                "Troubleshot system, integration, and user issues ensuring timely resolution with minimal business disruption",
-                "Developed custom scripts and logic to extend platform functionality and support business processes",
-                "Delivered user training, technical guidance, and documentation for successful system deployment",
-            ],
-        },
-        {
-            role: "Reservations Agent",
-            company: "Great National Hotels",
-            period: "August 2023 – June 2024",
-            location: "Ireland",
-            color: "border-purple-500/40",
-            badge: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-            current: false,
-            bullets: [
-                "Managed bookings and guest communications using property management systems",
-                "Handled administrative processes accurately while meeting service and performance targets",
-            ],
-        },
-        {
-            role: "Technical Support Agent",
-            company: "Apple Distribution Ltd",
-            period: "June 2022 – May 2023",
-            location: "Ireland",
-            color: "border-gray-500/40",
-            badge: "bg-gray-500/10 text-gray-400 border-gray-500/20",
-            current: false,
-            bullets: [
-                "Diagnosed and resolved hardware and software issues across Apple devices in a high-volume environment",
-                "Delivered remote technical support maintaining strong customer service experience",
-            ],
-        },
-    ];
 
     return (
         <Layout>
@@ -86,7 +34,7 @@ const About = () => {
                                 I'm a Service Delivery Engineer at Dell Technologies in Limerick, with a background in software implementation, systems support, and technical problem solving. I enjoy working at the intersection of technology, design, and business — turning ideas into real world solutions.
                             </p>
                             <p className="text-muted-foreground leading-relaxed">
-                                Previously at Blocworx, I worked as a Systems Support & Software Implementation Engineer, building workflows, developing custom scripts, and helping clients get the most out of their systems. Outside of work I'm always building something — whether that's a portfolio project, experimenting with new tech, or exploring entrepreneurial ideas in automotive customisation and fragrance branding.
+                                Previously at Blocworx, I worked as a Systems Support & Software Implementation Engineer, building workflows, developing custom scripts, and helping clients get the most out of their systems. Outside of work I'm always building something — whether that's a portfolio project, experimenting with new tech, or exploring entrepreneurial ventures in automotive customisation, fragrance branding, and mobile detailing.
                             </p>
                             <p className="text-muted-foreground leading-relaxed">
                                 I hold a BSc in Computing (Software Development) from Atlantic Technological University and I'm fluent in English and Arabic, with basic French.
@@ -95,42 +43,19 @@ const About = () => {
                     </div>
 
                     {/* Experience */}
-                    <div>
-                        <div className="flex items-center gap-2 mb-6">
-                            <Briefcase className="h-5 w-5 text-primary" />
-                            <h2 className="text-xl font-semibold">Experience</h2>
+                    <Link
+                        to="/experience"
+                        className="flex items-center justify-between gap-4 bg-card/50 border border-border/50 rounded-xl p-5 hover:border-primary/50 transition-colors group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <Briefcase className="h-5 w-5 text-primary shrink-0" />
+                            <div>
+                                <h2 className="font-semibold">Work Experience</h2>
+                                <p className="text-muted-foreground text-sm">See the full career timeline — Dell Technologies, Blocworx & more</p>
+                            </div>
                         </div>
-                        <div className="space-y-4">
-                            {experience.map((job) => (
-                                <div key={job.role} className={`bg-card/50 border ${job.color} rounded-xl p-5`}>
-                                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-3">
-                                        <div>
-                                            <div className="flex items-center gap-2 flex-wrap">
-                                                <h3 className="font-semibold text-foreground">{job.role}</h3>
-                                                {job.current && (
-                                                    <span className={`text-xs px-2 py-0.5 rounded-full border ${job.badge} font-medium`}>
-                            Current
-                          </span>
-                                                )}
-                                            </div>
-                                            <p className="text-primary text-sm font-medium">{job.company}</p>
-                                        </div>
-                                        <div className="text-right shrink-0">
-                                            <p className="text-muted-foreground text-xs">{job.period}</p>
-                                            <p className="text-muted-foreground text-xs">{job.location}</p>
-                                        </div>
-                                    </div>
-                                    <ul className="space-y-1">
-                                        {job.bullets.map((b, i) => (
-                                            <li key={i} className="text-muted-foreground text-sm">
-                                                {b}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                        <ArrowRight className="h-5 w-5 text-primary shrink-0 group-hover:translate-x-1 transition-transform" />
+                    </Link>
 
                     {/* Education */}
                     <div>

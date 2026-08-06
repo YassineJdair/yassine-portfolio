@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Layout from '@/components/Layout';
+import { useSEO } from '@/hooks/useSEO';
 
 type Mode = 'focus' | 'short' | 'long';
 
@@ -12,6 +13,7 @@ const MODE_BG: Record<Mode, string> = { focus: "bg-red-500", short: "bg-green-50
 const MODE_LABELS: Record<Mode, string> = { focus: "Focus", short: "Short Break", long: "Long Break" };
 
 export default function PomodoroTimer() {
+    useSEO("Pomodoro Timer – Yassine Jdair", "Productivity tool using the Pomodoro technique to improve focus and work efficiency.", "/pomodoro-timer");
     const [mode, setMode] = useState<Mode>('focus');
     const [durations, setDurations] = useState(DEFAULTS);
     const [seconds, setSeconds] = useState(DEFAULTS.focus * 60);
