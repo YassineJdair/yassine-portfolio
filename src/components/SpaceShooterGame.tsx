@@ -259,11 +259,6 @@ const SpaceShooterGame: React.FC = () => {
                         const shooter = alive[Math.floor(Math.random() * alive.length)];
                         st.enemyBullets.push({ x: shooter.x + ENEMY_W / 2 - 2, y: shooter.y + ENEMY_H });
                     }
-
-                    // Invasion check
-                    if (alive.some(e => e.y + ENEMY_H >= PLAYER_Y)) {
-                        st.lives = 0;
-                    }
                 }
 
                 // Boss movement
@@ -353,12 +348,15 @@ const SpaceShooterGame: React.FC = () => {
                         localStorage.setItem('shooter-best', String(st.score));
                     }
                 }
+                const phaseChanged = st.phase !== 'playing';
 
-                setHud({
-                    score: st.score, lives: Math.max(0, st.lives), level: st.level,
-                    best: st.best, phase: st.phase,
-                    bossHp: st.boss?.hp ?? 0, bossMaxHp: st.boss?.maxHp ?? 0,
-                });
+                if (phaseChanged || st.frameCount % 6 === 0) {
+                    setHud({
+                        score: st.score, lives: Math.max(0, st.lives), level: st.level,
+                        best: st.best, phase: st.phase,
+                        bossHp: st.boss?.hp ?? 0, bossMaxHp: st.boss?.maxHp ?? 0,
+                    });
+                }
             } else if (st.phase === 'levelIntro') {
                 st.levelIntroTimer--;
                 if (st.levelIntroTimer <= 0) {
