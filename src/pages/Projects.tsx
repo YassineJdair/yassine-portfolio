@@ -43,11 +43,6 @@ const Projects = () => {
             link: "/salary-calculator"
         },
         {
-            title: "Budget Planner",
-            description: "Plan your monthly finances with income and expense tracking, savings rate, and category breakdowns.",
-            link: "/budget-planner"
-        },
-        {
             title: "Car Calculator",
             description: "Irish motor tax calculator by CO₂ or engine size, plus fuel cost estimator for any trip.",
             link: "/car-calculator"

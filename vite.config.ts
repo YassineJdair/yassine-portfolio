@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => ({
                 '/dailyword',
                 '/zip',
                 '/patches',
+                '/space-shooter',
                 '/calculator',
                 '/pomodoro-timer',
                 '/task-tracker',

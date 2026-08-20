@@ -28,6 +28,7 @@ const SnakeGame = lazy(() => import("./components/SnakeGame"));
 const DailyWord = lazy(() => import("./components/DailyWord"));
 const ZipGame = lazy(() => import("./components/ZipGame"));
 const PatchesGame = lazy(() => import("./components/PatchesGame"));
+const SpaceShooterGame = lazy(() => import("./components/SpaceShooterGame"));
 
 // Tools
 const PasswordGenerator = lazy(() => import("./pages/PasswordGenerator"));
@@ -63,6 +64,7 @@ const AppRoutes = () => {
                     <Route path="/dailyword" element={<DailyWord />} />
                     <Route path="/zip" element={<ZipGame />} />
                     <Route path="/patches" element={<PatchesGame />} />
+                    <Route path="/space-shooter" element={<SpaceShooterGame />} />
 
                     {/* Original tools */}
                     <Route path="/calculator" element={<Calculator />} />

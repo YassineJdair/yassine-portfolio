@@ -29,6 +29,14 @@ const games = [
         badge: "NEW",
     },
     {
+        to: "/space-shooter",
+        label: "🚀 Space Shooter",
+        bg: "bg-purple-700 hover:bg-purple-600",
+        text: "text-white",
+        desc: "Arcade shooter · Waves of enemies · Boss every 5 levels",
+        badge: "NEW",
+    },
+    {
         to: "/crossyroad",
         label: "🐥 Play Crossy Road",
         bg: "bg-yellow-500 hover:bg-yellow-400",
@@ -61,7 +69,7 @@ const games = [
 const GamesMenu = () => {
     useSEO(
         "Games – Yassine Jdair",
-        "7 browser games built from scratch — Snake, Pacman, Crossy Road, Daily Word, Daily Zip, Daily Patches and more.",
+        "8 browser games built from scratch — Space Shooter, Snake, Pacman, Crossy Road, Daily Word, Daily Zip, Daily Patches and more.",
         "/games"
     );
 
@@ -69,7 +77,7 @@ const GamesMenu = () => {
         <Layout>
             <div className="flex flex-col items-center justify-center min-h-screen gap-8 px-6 py-12">
                 <div className="text-center">
-                    <h1 className="text-5xl font-extrabold text-white drop-shadow-md mb-2">
+                    <h1 className="text-5xl font-extrabold text-foreground drop-shadow-md mb-2">
                         🎮 Games
                     </h1>
                     <p className="text-muted-foreground">{games.length} games — all built from scratch</p>
