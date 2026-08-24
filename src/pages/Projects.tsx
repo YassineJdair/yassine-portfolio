@@ -1,11 +1,13 @@
 import Layout from '@/components/Layout';
 import ProjectCard from '@/components/ProjectCard';
+import FeaturedProjectCard from '@/components/FeaturedProjectCard';
+import { featuredProjects } from '@/data/featuredProjects';
 import { useSEO } from '@/hooks/useSEO';
 
 const Projects = () => {
     useSEO(
         "Projects – Yassine Jdair",
-        "Live tools, calculators, trackers and dev utilities built from scratch by Yassine Jdair.",
+        "Independently designed and built full-stack apps, e-commerce storefronts and SaaS tools, plus live tools, calculators, trackers and dev utilities by Yassine Jdair.",
         "/projects"
     );
 
@@ -100,8 +102,23 @@ const Projects = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold text-center mb-4">Projects</h1>
                     <p className="text-center text-muted-foreground mb-12">
-                        {projects.length} live tools & apps — all built from scratch
+                        Full-stack apps and client work, plus {projects.length} live tools & apps — all built from scratch
                     </p>
+
+                    {/* Featured work */}
+                    <div className="mb-16">
+                        <h2 className="text-lg font-semibold text-primary mb-1">💼 Featured Work</h2>
+                        <p className="text-sm text-muted-foreground mb-4">
+                            Designed, built and deployed independently for clients and personal ventures.
+                        </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {featuredProjects.map(project => (
+                                <FeaturedProjectCard key={project.title} {...project} />
+                            ))}
+                        </div>
+                    </div>
+
+                    <h2 className="text-2xl font-bold text-center mb-8">In-Site Tools & Apps</h2>
 
                     {categories.map(cat => {
                         const catProjects = cat.items

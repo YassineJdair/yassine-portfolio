@@ -9,7 +9,14 @@ const experiences = [
         period: "05/2026 - Present",
         current: true,
         description: "Managing services operations backlog within the supply chain, ensuring customer orders are resolved in a timely manner. Working with Global Operations, Engineering, IT, and Enablement teams to remove bottlenecks and ensure frictionless order flow across the EMEA services supply chain.",
-        tags: ["Supply Chain", "Service Delivery", "Operations", "Root Cause Analysis", "Process Improvement"],
+        highlights: [
+            "Built an end-to-end Python/Selenium dashboard refresh pipeline (LCH Dashboard Refresh Pipeline) integrating an internal OAuth2 API with batched/retried calls, cutting a daily manual process from ~25 minutes to ~3 minutes.",
+            "Designed a self-service order-validation restart tool with a dry-run mode, cutting bulk revalidation of 8,000+ orders from an estimated 3-4 hours to ~15 minutes for non-technical colleagues.",
+            "Consolidated multiple manual report pulls into a single automated morning routine, replacing legacy Power Automate Desktop flows with a Python framework and cutting total runtime from ~60-80 minutes to ~5 minutes.",
+            "Automated a daily UPS tracking cross-reference and stakeholder notification task, reducing it from ~10 minutes to ~2 minutes.",
+            "Wrapped a legacy Excel VBA macro in a PowerShell automation layer (DashV8), cutting a ~15-minute manual sensitivity-labeling process to ~2 minutes while eliminating the risk of corrupting the shared source file.",
+        ],
+        tags: ["Supply Chain", "Service Delivery", "Operations", "Root Cause Analysis", "Process Improvement", "Python", "Selenium", "PowerShell", "Automation"],
     },
     {
         company: "Blocworx",
@@ -105,6 +112,14 @@ const Experience = () => {
                                 </div>
 
                                 <p className="text-muted-foreground mb-4">{exp.description}</p>
+
+                                {exp.highlights && (
+                                    <ul className="list-disc list-outside pl-5 space-y-1.5 mb-4 text-muted-foreground text-sm">
+                                        {exp.highlights.map((highlight) => (
+                                            <li key={highlight}>{highlight}</li>
+                                        ))}
+                                    </ul>
+                                )}
 
                                 <div className="flex flex-wrap gap-2">
                                     {exp.tags.map((tag) => (
