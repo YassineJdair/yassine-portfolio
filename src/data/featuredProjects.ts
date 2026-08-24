@@ -19,7 +19,7 @@ export const featuredProjects: FeaturedProject[] = [
         scale: "~9,400 LOC · 18 components · 16 routed pages · multi-currency",
         highlight: "Built entirely independently — integrated Shopify checkout/payments, email marketing, reviews, and analytics into a custom headless frontend with multi-currency support and customer account auth.",
         liveUrl: "https://maisondoud.com",
-        image: null,
+        image: "/screenshots/maison-doud.jpg",
     },
     {
         title: "Hydrosolutions Biller",
@@ -30,7 +30,7 @@ export const featuredProjects: FeaturedProject[] = [
         highlight: "Independently designed the database schema and RLS security model; implemented in-browser video editing using FFmpeg WASM and automated PDF invoice generation.",
         liveUrl: null,
         private: true,
-        image: null,
+        image: "/screenshots/hydrosolutions-biller.jpg",
     },
     {
         title: "FID (Family Insight of Deen)",
@@ -41,7 +41,7 @@ export const featuredProjects: FeaturedProject[] = [
         highlight: "Architected defense-in-depth security — access control enforced independently at both the middleware layer and the database (RLS) layer.",
         liveUrl: null,
         private: true,
-        image: null,
+        image: "/screenshots/fid.jpg",
     },
     {
         title: "Developer Portfolio & App Suite",
@@ -51,7 +51,7 @@ export const featuredProjects: FeaturedProject[] = [
         scale: "~12,100 LOC · 100 files · 26 routes · 49 UI primitives · unit-tested calculator logic",
         highlight: "Full CI/CD pipeline (lint, typecheck, test, build) via GitHub Actions; demonstrates range across games, tools, and calculators.",
         liveUrl: "https://yassine-mac.netlify.app",
-        image: null,
+        image: "/screenshots/portfolio.jpg",
     },
     {
         title: "Hydrosolutions",
@@ -61,7 +61,7 @@ export const featuredProjects: FeaturedProject[] = [
         scale: "~1,500 LOC · custom slot-picker UI built from scratch",
         highlight: "Lightweight serverless integration with secure API-key handling, no framework overhead.",
         liveUrl: "https://www.hydrosolutions.ie",
-        image: null,
+        image: "/screenshots/hydrosolutions.jpg",
     },
     {
         title: "Atelier Bloom",
@@ -71,6 +71,6 @@ export const featuredProjects: FeaturedProject[] = [
         scale: "~3,000 LOC across 16 pages · strong SEO (JSON-LD, sitemap, OG tags)",
         highlight: "Clean, dependency-free, SEO-optimized static site delivery.",
         liveUrl: "https://atelierbloomevents.com/",
-        image: null,
+        image: "/screenshots/atelier-bloom.jpg",
     },
 ];
