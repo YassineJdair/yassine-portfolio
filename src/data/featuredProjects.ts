@@ -22,6 +22,17 @@ export const featuredProjects: FeaturedProject[] = [
         image: "/screenshots/maison-doud.jpg",
     },
     {
+        title: "AI Voice Receptionist",
+        subtitle: "Prototype, in progress",
+        description: "AI phone receptionist for car dealerships that answers stock questions, checks availability, books viewings and takes messages for staff.",
+        stack: ["Vapi", "Supabase", "Postgres RLS", "Edge Functions", "TypeScript", "Deno", "OpenAI GPT-4o", "Deepgram"],
+        scale: "6 voice-agent tools · backend-only database access · tested with a live browser voice call",
+        highlight: "Built a transactional booking flow with advisory locks and exclusion constraints; in testing, five simultaneous requests for one slot produced exactly one booking. Guardrails limit answers to database facts, require confirmation before booking and pass unresolved queries to staff.",
+        liveUrl: null,
+        private: true,
+        image: null,
+    },
+    {
         title: "Hydrosolutions Biller",
         subtitle: "Business Management App",
         description: "Internal app for my service business: quotes and invoices, customers, expenses with private receipt storage, fleet maintenance, jobs, and PDF, Excel and ZIP exports.",
