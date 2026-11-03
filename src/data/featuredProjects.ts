@@ -30,7 +30,7 @@ export const featuredProjects: FeaturedProject[] = [
         highlight: "Built a transactional booking flow with advisory locks and exclusion constraints; in testing, five simultaneous requests for one slot produced exactly one booking. Guardrails limit answers to database facts, require confirmation before booking and pass unresolved queries to staff.",
         liveUrl: null,
         private: true,
-        image: null,
+        image: "/screenshots/ai-voice-receptionist.jpg",
     },
     {
         title: "Hydrosolutions Biller",
