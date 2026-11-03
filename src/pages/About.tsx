@@ -6,14 +6,14 @@ import { useSEO } from "@/hooks/useSEO";
 const About = () => {
     useSEO(
         "About – Yassine Jdair",
-        "About Yassine Jdair — Service Delivery Engineer at Dell Technologies with a background in software implementation and systems support.",
+        "About Yassine Jdair, a full-stack developer and Service Delivery Engineer at Dell Technologies, building automation, dashboards and live web apps.",
         "/about"
     );
 
     const skills = {
         "Service Delivery & Ops": ["Service Delivery", "Operational Support", "Process Improvement", "Root Cause Analysis", "Issue Resolution"],
-        "Development": ["Java", "JavaScript", "TypeScript", "Node.js", "Python", "MySQL"],
-        "Tools": ["Git", "Jira", "Postman", "Workflow Automation", "Technical Documentation"],
+        "Development": ["Python", "JavaScript", "TypeScript", "SQL", "Java", "React", "Next.js", "Node.js", "Supabase/Postgres", "GraphQL", "REST APIs", "Serverless Functions"],
+        "Automation & Tools": ["Playwright", "Selenium", "pandas", "OAuth2/SSO", "PowerShell", "VBA", "Power BI", "Git", "GitHub Actions", "Netlify", "Jira", "AI-Assisted Development"],
     };
 
     return (
@@ -31,10 +31,10 @@ const About = () => {
 
                         <div className="bg-card/50 border border-border/50 rounded-xl p-6 text-left space-y-4">
                             <p className="text-muted-foreground leading-relaxed">
-                                I'm a Service Delivery Engineer at Dell Technologies in Limerick, with a background in software implementation, systems support, and technical problem solving. I enjoy working at the intersection of technology, design, and business — turning ideas into real world solutions.
+                                I'm a full-stack developer and a Service Delivery Engineer at Dell Technologies in Limerick, where I build Python automation, dashboards and reporting tools that cut manual jobs from hours to minutes. I enjoy taking something from an idea to a working, deployed product.
                             </p>
                             <p className="text-muted-foreground leading-relaxed">
-                                Previously at Blocworx, I worked as a Systems Support & Software Implementation Engineer, building workflows, developing custom scripts, and helping clients get the most out of their systems. Outside of work I'm always building something — whether that's a portfolio project, experimenting with new tech, or exploring entrepreneurial ventures in automotive customisation, fragrance branding, and mobile detailing.
+                                Previously at Blocworx, I worked as a Systems Support & Software Implementation Engineer, turning client requirements into workflows and custom scripts, and training the people using them. Outside of work I build and run the live systems behind my own businesses, including e-commerce, online booking and invoicing.
                             </p>
                             <p className="text-muted-foreground leading-relaxed">
                                 I hold a BSc in Computing (Software Development) from Atlantic Technological University and I'm fluent in English and Arabic, with basic French.

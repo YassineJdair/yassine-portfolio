@@ -3,12 +3,12 @@ import { ArrowRight, Mail, Github, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 
-const HEADLINE_SKILLS = ["Java", "TypeScript", "React", "Node.js"];
+const HEADLINE_SKILLS = ["Python", "TypeScript", "React", "Next.js", "Supabase"];
 
 const Index = () => {
   useSEO(
-    "Yassine Jdair – Software Engineer & Developer Portfolio",
-    "Yassine Jdair – Software Engineer at Dell Technologies, Limerick. Portfolio of web apps, games and dev tools built with React, TypeScript and Node.js.",
+    "Yassine Jdair – Full-Stack Developer Portfolio",
+    "Yassine Jdair – Full-stack developer and Service Delivery Engineer at Dell Technologies, Limerick. Live web apps, automation and dev tools built with React, TypeScript and Python.",
     "/"
   );
 
@@ -18,7 +18,7 @@ const Index = () => {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl font-bold mb-4">Yassine Jdair</h1>
           <p className="text-xl text-muted-foreground mb-6">
-            Software Engineer at Dell Technologies — building web apps, tools and games from scratch.
+            Full-stack developer building live web apps, automation and dashboards. Service Delivery Engineer at Dell Technologies.
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 mb-8 text-sm font-mono text-muted-foreground">

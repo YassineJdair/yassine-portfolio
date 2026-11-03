@@ -8,15 +8,17 @@ const experiences = [
         role: "Service Delivery Engineer 2",
         period: "05/2026 - Present",
         current: true,
-        description: "Managing services operations backlog within the supply chain, ensuring customer orders are resolved in a timely manner. Working with Global Operations, Engineering, IT, and Enablement teams to remove bottlenecks and ensure frictionless order flow across the EMEA services supply chain.",
+        description: "Managing the services backlog across the EMEA supply chain with Global Operations, Engineering, IT and Enablement teams, and building the software that removes manual work from it.",
         highlights: [
-            "Built an end-to-end Python/Selenium dashboard refresh pipeline (LCH Dashboard Refresh Pipeline) integrating an internal OAuth2 API with batched/retried calls, cutting a daily manual process from ~25 minutes to ~3 minutes.",
-            "Designed a self-service order-validation restart tool with a dry-run mode, cutting bulk revalidation of 8,000+ orders from an estimated 3-4 hours to ~15 minutes for non-technical colleagues.",
-            "Consolidated multiple manual report pulls into a single automated morning routine, replacing legacy Power Automate Desktop flows with a Python framework and cutting total runtime from ~60-80 minutes to ~5 minutes.",
-            "Automated a daily UPS tracking cross-reference and stakeholder notification task, reducing it from ~10 minutes to ~2 minutes.",
-            "Wrapped a legacy Excel VBA macro in a PowerShell automation layer (DashV8), cutting a ~15-minute manual sensitivity-labeling process to ~2 minutes while eliminating the risk of corrupting the shared source file.",
+            "Built an order-tracking dashboard that searches five internal fulfilment systems at once (Python, Playwright, JavaScript), handling OAuth2/JWT and legacy sign-ins, and rolled it out to the team with setup docs.",
+            "Built a Python pipeline handling ~10,000 orders a day through an internal OAuth2 API with batched, retried calls, cutting a daily dashboard refresh from ~25 minutes to ~3.",
+            "Designed a self-service order-validation restart tool with a dry-run mode, cutting bulk revalidation of 8,000+ orders from an estimated 3-4 hours to ~15 minutes.",
+            "Built a Python/pandas pipeline that turns the raw global backlog export into a clean Excel report for Power BI, adding live order statuses from internal REST APIs.",
+            "Built a six-page Power BI backlog report covering customers, holds, facilities and defects, fed by a daily Excel/VBA workbook.",
+            "Built more than a dozen Python, PowerShell and VBA reporting tools with test modes, retries and fail-fast steps, so live reports don't refresh from bad data.",
+            "Automated daily manual work, including report pulls (~60-80 minutes to one ~5-minute script), UPS tracking emails (~10 minutes to ~2) and a legacy macro (~15 minutes to ~2).",
         ],
-        tags: ["Supply Chain", "Service Delivery", "Operations", "Root Cause Analysis", "Process Improvement", "Python", "Selenium", "PowerShell", "Automation"],
+        tags: ["Python", "Playwright", "pandas", "Power BI", "PowerShell", "VBA", "OAuth2", "REST APIs", "Automation", "Supply Chain"],
     },
     {
         company: "Blocworx",
@@ -79,7 +81,7 @@ const experiences = [
 const Experience = () => {
     useSEO(
         "Experience – Yassine Jdair",
-        "Professional experience of Yassine Jdair, Software Engineer at Dell Technologies, Limerick.",
+        "Professional experience of Yassine Jdair, Service Delivery Engineer 2 at Dell Technologies in Limerick, building Python automation, dashboards and reporting tools.",
         "/experience"
     );
 
