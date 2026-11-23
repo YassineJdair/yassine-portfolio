@@ -35,7 +35,7 @@ export const featuredProjects: FeaturedProject[] = [
     {
         title: "Hydrosolutions Biller",
         subtitle: "Business Management App",
-        description: "Internal app for my service business: quotes and invoices, customers, expenses with private receipt storage, fleet maintenance, jobs, and PDF, Excel and ZIP exports.",
+        description: "Internal app for my service business: quotes and invoices with PDF output, a bookings inbox and calendar, jobs, customers, products, expenses with private receipt storage, fleet costs, social posts, and Excel and ZIP exports.",
         stack: ["React 18", "TypeScript", "Vite", "Supabase", "Postgres RLS", "@react-pdf/renderer", "ExcelJS", "PGlite", "GitHub Actions"],
         scale: "~6,100 LOC · 9-table schema with Row-Level Security · numbered migrations · audit log",
         highlight: "Designed the database and access model: staff allow-list, totals re-checked in Postgres, customer and document saved in one transaction, and CI that lints, tests and builds on every push, with database tests running against an isolated PGlite instance.",
@@ -67,10 +67,10 @@ export const featuredProjects: FeaturedProject[] = [
     {
         title: "Hydrosolutions",
         subtitle: "Live Booking Site",
-        description: "Multi-page site with live online booking for my car-valeting and window-cleaning business.",
+        description: "Multi-page site with live online booking for my mobile car-valeting and window-cleaning business across Clare, Limerick, Galway and Cork.",
         stack: ["HTML", "CSS", "Vanilla JS", "Netlify Functions", "Cal.com v2 API", "Supabase", "GA4"],
         scale: "~2,500 LOC · 12 pages · custom slot picker and package builder",
-        highlight: "Serverless functions fetch availability and create bookings with the API key kept server-side and only allow-listed services accepted, plus moderated reviews, county landing pages and consent-based lead tracking.",
+        highlight: "Serverless functions fetch availability and create bookings with the API key kept server-side and only allow-listed services accepted, plus a package builder, a fleet and dealership page, county and town landing pages, pricing guides, moderated reviews and consent-based lead tracking.",
         liveUrl: "https://www.hydrosolutions.ie",
         image: "/screenshots/hydrosolutions.jpg",
     },
